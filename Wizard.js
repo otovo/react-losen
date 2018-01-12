@@ -47,10 +47,9 @@ class Wizard extends React.Component<Props, State> {
 
       registerStep: (name: string) => {
         const FIRST_ELEMENT = 0;
-
         this.setState((prevState: State) => ({
           ...prevState,
-          activeStep: prevState.steps[FIRST_ELEMENT],
+          activeStep: prevState.steps[FIRST_ELEMENT] || name,
           activeStepIndex: FIRST_ELEMENT,
           steps: [...prevState.steps, name],
         }));

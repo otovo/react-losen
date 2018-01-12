@@ -21,34 +21,32 @@ class Controls extends React.Component<Props> {
 
     // TODO: Add disabled prop to NewButton.js and change component from Button to NewButton
     return (
-      <React.Fragment>
-        <div className="tc">
-          <div className="mb3">
+      <div className="tc">
+        <div className="mb3">
+          <Button
+            disabled={!this.context.enableNext}
+            onClick={() => {
+              if (this.context.isLastStep) {
+                this.changeStep('complete');
+              }
+              this.changeStep('next');
+            }}>
+            {nextText}
+          </Button>
+        </div>
+        {!this.context.isFirstStep && (
+          <div>
             <Button
+              blank
               disabled={!this.context.enableNext}
-              onClick={() => {
-                if (this.context.isLastStep) {
-                  this.changeStep('complete');
-                }
-                this.changeStep('next');
-              }}>
-              {nextText}
+              onClick={() => this.context.changeStep('previous')}>
+              <span className="underline text-o-gray-disabled f5">
+                {prevText}
+              </span>
             </Button>
           </div>
-          {!this.context.isFirstStep && (
-            <div>
-              <Button
-                blank
-                disabled={!this.context.enableNext}
-                onClick={() => this.context.changeStep('previous')}>
-                <span className="underline text-o-gray-disabled f5">
-                  {prevText}
-                </span>
-              </Button>
-            </div>
-          )}
-        </div>
-      </React.Fragment>
+        )}
+      </div>
     );
   }
 }
