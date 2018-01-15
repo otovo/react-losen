@@ -50,7 +50,6 @@ class Step extends React.Component<Props> {
     if (this.context.activeStep === this.props.name) {
       return React.cloneElement(this.props.children, {
         onValid: this.stepIsValid,
-        stepData: this.context.stepData,
         name: this.props.name,
         skipStep: this.skipStep,
       });
@@ -64,7 +63,6 @@ Step.contextTypes = {
   changeStep: PropTypes.func.isRequired,
   onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
-  stepData: PropTypes.object.isRequired,
 };
 
 export default Step;
