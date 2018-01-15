@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import log from 'loglevel';
 import PropTypes from 'prop-types';
 import { getSafeNext, type Direction } from './utils';
 
@@ -37,6 +38,7 @@ class Wizard extends React.Component<Props, State> {
       enableNext: this.state.enableNext,
       isFirstStep: this.state.isFirstStep,
       isLastStep: this.state.isLastStep,
+      stepData: this.state.stepData,
 
       /*
         Called in componentDidMount() lifecycle of Step.js
@@ -129,6 +131,7 @@ Wizard.childContextTypes = {
   isLastStep: PropTypes.bool.isRequired,
   onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
+  stepData: PropTypes.object.isRequired,
 };
 
 export default Wizard;

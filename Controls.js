@@ -1,13 +1,38 @@
 // @flow
+import { injectIntl } from 'react-intl';
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button/Button';
 
 import { getButtonText, type Direction, type ButtonValues } from './utils';
+import m from './messages';
+
+/*
+  Customize by providing custom texts. Example:
+*/
+
+const mergeDefaultAndProps = (intl, nextTexts?, previousTexts?) => ({
+  nextTexts: {
+    start: intl.formatMessage(m.nextStart),
+    finish: intl.formatMessage(m.nextFinish),
+    default: intl.formatMessage(m.nextDefault),
+    ...nextTexts,
+  },
+  previousTexts: {
+    start: intl.formatMessage(m.previousStart),
+    finish: intl.formatMessage(m.previousFinish),
+    default: intl.formatMessage(m.previousDefault),
+    ...previousTexts,
+  },
+});
 
 type Props = {
-  nextTexts: ButtonValues,
-  previousTexts: ButtonValues,
+  nextTexts?: ButtonValues,
+  previousTexts?: ButtonValues,
+  intl: {
+    formatMessage: Function,
+  },
 };
 
 class Controls extends React.Component<Props> {
@@ -16,8 +41,14 @@ class Controls extends React.Component<Props> {
   };
 
   render() {
-    const nextText = getButtonText(this.props.nextTexts, this.context);
-    const prevText = getButtonText(this.props.previousTexts, this.context);
+    const mergedTexts = mergeDefaultAndProps(
+      this.props.intl,
+      this.props.nextTexts,
+      this.props.previousTexts,
+    );
+
+    const nextText = getButtonText(mergedTexts.nextTexts, this.context);
+    const prevText = getButtonText(mergedTexts.previousTexts, this.context);
 
     // TODO: Add disabled prop to NewButton.js and change component from Button to NewButton
     return (
@@ -58,4 +89,4 @@ Controls.contextTypes = {
   isLastStep: PropTypes.bool.isRequired,
 };
 
-export default Controls;
+export default injectIntl(Controls);

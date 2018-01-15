@@ -1,11 +1,19 @@
 // @flow
 export type Direction = '' | 'next' | 'previous' | 'complete';
 
+export type StepProps = {
+  onValid?: (data?: any) => void,
+  stepData: Object,
+  name: string,
+  skipStep: () => void,
+};
+
 export type Context = {
   activeStep: string,
   enableNext: boolean,
   isFirstStep: boolean,
   isLastStep: boolean,
+  stepData: Object,
   changeStep: (direction: Direction) => void,
   onValid: () => void,
   registerStep: (name: string) => void,
