@@ -8,9 +8,12 @@ const emptyStep = {
   validator: () => '',
 };
 
+type OnChangeType = (data: Object) => void;
+type OnPartialChange = (name: string) => OnChangeType;
+
 type Props = {
   onComplete: Object => void,
-  render: (stepData: Object) => React.Node,
+  render: (stepData: Object, func: OnPartialChange) => React.Node,
 };
 
 type WizardStep = {
@@ -151,12 +154,25 @@ class Wizard extends React.Component<Props, State> {
     }
   };
 
+  // type PartialChangeType = (name: string): (data: Object)
+
+  onPartialChange = (name: string) => (data: Object) => {
+    const newStepData = data ? { [name]: data } : {};
+    this.setState(prevState => ({
+      ...prevState,
+      stepData: {
+        ...prevState.stepData,
+        ...newStepData,
+      },
+    }));
+  };
+
   onComplete = () => {
     this.props.onComplete(this.state.stepData);
   };
 
   render() {
-    return this.props.render(this.state.stepData);
+    return this.props.render(this.state.stepData, this.onPartialChange);
   }
 }
 
