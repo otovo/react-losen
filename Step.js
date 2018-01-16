@@ -8,7 +8,6 @@ type Props = {
   children: React.Node,
   name: string,
   validator?: ValidatorFunction,
-  disableNextStep?: boolean,
 };
 
 /*
@@ -25,9 +24,6 @@ class Step extends React.Component<Props> {
 
   componentDidMount() {
     this.context.registerStep(this.props.name, this.props.validator);
-    if (this.props.disableNextStep) {
-      this.context.disableNext();
-    }
   }
 
   componentWillReceiveProps(nextProps: Props, nextContext: Context) {
@@ -64,7 +60,6 @@ Step.contextTypes = {
   changeStep: PropTypes.func.isRequired,
   onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
-  disableNext: PropTypes.func.isRequired,
 };
 
 export default Step;

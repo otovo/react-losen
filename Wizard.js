@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import log from 'loglevel';
 import PropTypes from 'prop-types';
 import { getSafeNext, type Direction, type ValidatorFunction } from './utils';
 
@@ -8,11 +9,12 @@ const emptyStep = {
   validator: () => '',
 };
 
-type OnChangeType = (data: Object) => void;
+type OnChangeType = (data: any) => void;
 type OnPartialChange = (name: string) => OnChangeType;
 
 type Props = {
   onComplete: Object => void,
+  debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => React.Node,
 };
 
@@ -25,7 +27,6 @@ type State = {
   activeStep: WizardStep,
   activeStepIndex: number,
   direction: Direction,
-  enableNext: boolean,
   isFirstStep: boolean,
   isLastStep: boolean,
   steps: Array<WizardStep>,
@@ -38,7 +39,6 @@ class Wizard extends React.Component<Props, State> {
     activeStep: emptyStep,
     activeStepIndex: 0,
     direction: '',
-    enableNext: true,
     isFirstStep: true,
     isLastStep: false,
     steps: [],
@@ -49,7 +49,6 @@ class Wizard extends React.Component<Props, State> {
   getChildContext() {
     return {
       activeStep: this.state.activeStep,
-      enableNext: this.state.enableNext,
       isFirstStep: this.state.isFirstStep,
       isLastStep: this.state.isLastStep,
       errorMessage: this.state.errorMessage,
@@ -75,19 +74,11 @@ class Wizard extends React.Component<Props, State> {
       onValid: (data: Object) => {
         this.setState(prevState => ({
           ...prevState,
-          enableNext: true,
           stepData: {
             ...prevState.stepData,
             ...data,
           },
         }));
-      },
-
-      // TODO: Reconsider this... Obsolete?
-      disableNext: () => {
-        this.setState({
-          enableNext: false,
-        });
       },
 
       /*
@@ -119,14 +110,16 @@ class Wizard extends React.Component<Props, State> {
           direction,
         );
 
-        return this.setState({
-          activeStep: this.state.steps[nextStep] || emptyStep,
-          activeStepIndex: nextStep,
-          direction,
-          enableNext: nextStep < 1,
-          isFirstStep: nextStep < 1,
-          isLastStep: nextStep === this.state.steps.length - 1,
-        });
+        return this.setState(
+          {
+            activeStep: this.state.steps[nextStep] || emptyStep,
+            activeStepIndex: nextStep,
+            direction,
+            isFirstStep: nextStep < 1,
+            isLastStep: nextStep === this.state.steps.length - 1,
+          },
+          this.stateDebugger,
+        );
       },
     };
   }
@@ -154,17 +147,26 @@ class Wizard extends React.Component<Props, State> {
     }
   };
 
+  stateDebugger = () => {
+    if (this.props.debug) {
+      log.debug('WIZARD UPDATED', this.state);
+    }
+  };
+
   // type PartialChangeType = (name: string): (data: Object)
 
   onPartialChange = (name: string) => (data: Object) => {
     const newStepData = data ? { [name]: data } : {};
-    this.setState(prevState => ({
-      ...prevState,
-      stepData: {
-        ...prevState.stepData,
-        ...newStepData,
-      },
-    }));
+    this.setState(
+      prevState => ({
+        ...prevState,
+        stepData: {
+          ...prevState.stepData,
+          ...newStepData,
+        },
+      }),
+      this.stateDebugger,
+    );
   };
 
   onComplete = () => {
@@ -182,13 +184,11 @@ Wizard.childContextTypes = {
     validator: PropTypes.func,
   }).isRequired,
   changeStep: PropTypes.func.isRequired,
-  enableNext: PropTypes.bool.isRequired,
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
-  disableNext: PropTypes.func.isRequired,
 };
 
 export default Wizard;

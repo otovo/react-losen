@@ -55,7 +55,6 @@ class Controls extends React.Component<Props> {
       <div className="tc">
         <div className="mb3">
           <Button
-            disabled={!this.context.enableNext}
             onClick={() => {
               if (this.context.isLastStep) {
                 this.changeStep('complete');
@@ -81,7 +80,6 @@ class Controls extends React.Component<Props> {
 
 Controls.contextTypes = {
   changeStep: PropTypes.func.isRequired,
-  enableNext: PropTypes.bool.isRequired,
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
 };
