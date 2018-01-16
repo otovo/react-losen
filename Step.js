@@ -1,12 +1,14 @@
 // @flow
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { type Context } from './utils';
+import { type Context, type ValidatorFunction } from './utils';
 
 type Props = {
   autoSkip?: boolean,
-  children: React.Element<any>,
+  children: React.Node,
   name: string,
+  validator?: ValidatorFunction,
+  disableNextStep?: boolean,
 };
 
 /*
@@ -14,11 +16,6 @@ type Props = {
  It adds a prop onValid(any) to it's children which is used to report to the wizard that we are 
  ready to advance to next step.
  
- TODO: Add onError(msg) prop that makes it possible to report errors
-
- TODO 2: 
-    Mayby consider using a render prop instead of automagically passing props down to children. 
-    This makes Flow confused, because props are appearing from nowhere.
 */
 
 class Step extends React.Component<Props> {
@@ -27,11 +24,17 @@ class Step extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.context.registerStep(this.props.name);
+    this.context.registerStep(this.props.name, this.props.validator);
+    if (this.props.disableNextStep) {
+      this.context.disableNext();
+    }
   }
 
   componentWillReceiveProps(nextProps: Props, nextContext: Context) {
-    if (nextContext.activeStep === this.props.name && this.props.autoSkip) {
+    if (
+      nextContext.activeStep.name === this.props.name &&
+      this.props.autoSkip
+    ) {
       this.context.changeStep('');
     }
   }
@@ -46,23 +49,22 @@ class Step extends React.Component<Props> {
   };
 
   render() {
-    // We pass the validator function and stepData down to the first child.
-    if (this.context.activeStep === this.props.name) {
-      return React.cloneElement(this.props.children, {
-        onValid: this.stepIsValid,
-        name: this.props.name,
-        skipStep: this.skipStep,
-      });
+    if (this.context.activeStep.name === this.props.name) {
+      return this.props.children;
     }
     return null;
   }
 }
 
 Step.contextTypes = {
-  activeStep: PropTypes.string.isRequired,
+  activeStep: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    validator: PropTypes.func,
+  }).isRequired,
   changeStep: PropTypes.func.isRequired,
   onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
+  disableNext: PropTypes.func.isRequired,
 };
 
 export default Step;

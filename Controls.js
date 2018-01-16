@@ -67,10 +67,7 @@ class Controls extends React.Component<Props> {
         </div>
         {!this.context.isFirstStep && (
           <div>
-            <Button
-              blank
-              disabled={!this.context.enableNext}
-              onClick={() => this.context.changeStep('previous')}>
+            <Button blank onClick={() => this.context.changeStep('previous')}>
               <span className="underline text-o-gray-disabled f5">
                 {prevText}
               </span>

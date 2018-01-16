@@ -1,6 +1,8 @@
 // @flow
 export type Direction = '' | 'next' | 'previous' | 'complete';
 
+export type ValidatorFunction = () => string;
+
 export type StepProps = {
   onValid?: (data?: any) => void,
   stepData: Object,
