@@ -12,9 +12,8 @@ type Props = {
 
 /*
  This component accepts a name acts as a context provider between Wizard and it's children.
- It adds a prop onValid(any) to it's children which is used to report to the wizard that we are 
- ready to advance to next step.
- 
+ It register itself on mount and accepts a validator prop. This can be used by the wizard to 
+ validate if it's cool to advance to the next step.
 */
 
 class Step extends React.Component<Props> {
@@ -35,15 +34,6 @@ class Step extends React.Component<Props> {
     }
   }
 
-  skipStep = () => {
-    this.context.changeStep('');
-  };
-
-  stepIsValid = (data?: any) => {
-    const stepData = data ? { [this.props.name]: data } : {};
-    this.context.onValid(stepData);
-  };
-
   render() {
     if (this.context.activeStep.name === this.props.name) {
       return this.props.children;
@@ -58,7 +48,6 @@ Step.contextTypes = {
     validator: PropTypes.func,
   }).isRequired,
   changeStep: PropTypes.func.isRequired,
-  onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
 };
 

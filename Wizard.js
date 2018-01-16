@@ -2,25 +2,23 @@
 import * as React from 'react';
 import log from 'loglevel';
 import PropTypes from 'prop-types';
-import { getSafeNext, type Direction, type ValidatorFunction } from './utils';
+import {
+  getSafeNext,
+  type Direction,
+  type ValidatorFunction,
+  type OnPartialChange,
+  type WizardStep,
+} from './utils';
 
 const emptyStep = {
   name: '',
   validator: () => '',
 };
 
-type OnChangeType = (data: any) => void;
-type OnPartialChange = (name: string) => OnChangeType;
-
 type Props = {
   onComplete: Object => void,
   debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => React.Node,
-};
-
-type WizardStep = {
-  name: string,
-  validator: ?ValidatorFunction,
 };
 
 type State = {
@@ -67,17 +65,6 @@ class Wizard extends React.Component<Props, State> {
           activeStep: prevState.steps[FIRST_ELEMENT] || name,
           activeStepIndex: FIRST_ELEMENT,
           steps: [...prevState.steps, { name, validator: validateFunction }],
-        }));
-      },
-
-      // Called when a step is valid
-      onValid: (data: Object) => {
-        this.setState(prevState => ({
-          ...prevState,
-          stepData: {
-            ...prevState.stepData,
-            ...data,
-          },
         }));
       },
 
@@ -186,7 +173,6 @@ Wizard.childContextTypes = {
   changeStep: PropTypes.func.isRequired,
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
-  onValid: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
 };

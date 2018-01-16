@@ -3,21 +3,20 @@ export type Direction = '' | 'next' | 'previous' | 'complete';
 
 export type ValidatorFunction = () => string;
 
-export type StepProps = {
-  onValid?: (data?: any) => void,
-  stepData: Object,
+export type OnChangeType = (data: any) => void;
+export type OnPartialChange = (name: string) => OnChangeType;
+
+export type WizardStep = {
   name: string,
-  skipStep: () => void,
+  validator: ?ValidatorFunction,
 };
 
 export type Context = {
-  activeStep: string,
-  enableNext: boolean,
+  activeStep: WizardStep,
   isFirstStep: boolean,
   isLastStep: boolean,
-  stepData: Object,
+  errorMessage: string,
   changeStep: (direction: Direction) => void,
-  onValid: () => void,
   registerStep: (name: string) => void,
 };
 
