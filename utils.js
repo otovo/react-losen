@@ -1,7 +1,8 @@
 // @flow
-export type Direction = '' | 'next' | 'previous' | 'complete';
+type StepTypes = 'next' | 'previous' | 'complete';
+export type Direction = ?StepTypes;
 
-export type ValidatorFunction = () => string;
+export type ValidatorFunction = () => ?string;
 
 export type OnChangeType = (data: any) => void;
 export type OnPartialChange = (name: string) => OnChangeType;
@@ -17,7 +18,7 @@ export type Context = {
   isLastStep: boolean,
   errorMessage: string,
   changeStep: (direction: Direction) => void,
-  registerStep: (name: string) => void,
+  registerStep: (name: string, validator?: ValidatorFunction) => void,
 };
 
 export type ButtonValues = {

@@ -7,7 +7,12 @@ import { type IntlType } from '../../../flowTypes';
 
 import NewButton from '../Button/NewButton';
 
-import { getButtonText, type Direction, type ButtonValues } from './utils';
+import {
+  getButtonText,
+  type Direction,
+  type ButtonValues,
+  type Context,
+} from './utils';
 import m from './messages';
 
 /*
@@ -49,6 +54,8 @@ type Props = {
 } & IntlType;
 
 class Controls extends React.Component<Props> {
+  context: Context;
+
   changeStep = (direction: Direction) => {
     this.context.changeStep(direction);
   };

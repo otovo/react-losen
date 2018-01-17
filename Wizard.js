@@ -8,6 +8,7 @@ import {
   type ValidatorFunction,
   type OnPartialChange,
   type WizardStep,
+  type Context,
 } from './utils';
 
 const emptyStep = {
@@ -29,14 +30,14 @@ type State = {
   isLastStep: boolean,
   steps: Array<WizardStep>,
   stepData: Object,
-  errorMessage: ?string,
+  errorMessage: string,
 };
 
 class Wizard extends React.Component<Props, State> {
   state = {
     activeStep: emptyStep,
     activeStepIndex: 0,
-    direction: '',
+    direction: null,
     isFirstStep: true,
     isLastStep: false,
     steps: [],
@@ -44,7 +45,7 @@ class Wizard extends React.Component<Props, State> {
     errorMessage: '',
   };
 
-  getChildContext() {
+  getChildContext(): Context {
     return {
       activeStep: this.state.activeStep,
       isFirstStep: this.state.isFirstStep,
@@ -128,7 +129,7 @@ class Wizard extends React.Component<Props, State> {
 
   stateDebugger = () => {
     if (this.props.debug) {
-      log.debug('WIZARD UPDATED', this.state);
+      log.debug('WIZARD STATE UPDATED', this.state);
     }
   };
 

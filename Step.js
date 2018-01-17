@@ -16,7 +16,9 @@ type Props = {
  validate if it's cool to advance to the next step.
 */
 
-class Step extends React.Component<Props> {
+class Step extends React.Component<Props, any> {
+  context: Context;
+
   static defaultProps = {
     autoSkip: false,
   };
@@ -30,7 +32,7 @@ class Step extends React.Component<Props> {
       nextContext.activeStep.name === this.props.name &&
       this.props.autoSkip
     ) {
-      this.context.changeStep('');
+      this.context.changeStep();
     }
   }
 
