@@ -111,21 +111,6 @@ class Wizard extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
-    /*
-      TODO: It would be nice to throw an error if less than two steps are registered.
-      Only problem is that we cant neccesary know when we're done adding steps. Because
-      setState() is async, the setState in registerSteps is finished after the 
-      componentDidMount lifecycle hook is called.
-
-      setTimeout() maybe? But this is kinda ugly and probably error prone...
- 
-      if (this.state.steps.length < 2) {
-        throw new Error('A wizard needs at least two steps');
-      }
-    */
-  }
-
   showErrorMessage = (msg: ?string) => {
     if (msg) {
       this.setState({
@@ -139,8 +124,6 @@ class Wizard extends React.Component<Props, State> {
       log.debug('WIZARD UPDATED', this.state);
     }
   };
-
-  // type PartialChangeType = (name: string): (data: Object)
 
   onPartialChange = (name: string) => (data: Object) => {
     const newStepData = data ? { [name]: data } : {};

@@ -15,7 +15,6 @@ export default defineMessages({
     id: `${I18N_NAMESPACE}.nextDefault`,
     defaultMessage: 'Neste',
   },
-
   previousStart: {
     id: `${I18N_NAMESPACE}.previousStart`,
     defaultMessage: 'Avbryt',

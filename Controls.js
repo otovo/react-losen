@@ -1,16 +1,32 @@
 // @flow
-import { injectIntl } from 'react-intl';
-
 import * as React from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import Button from '../Button/Button';
+
+import { type IntlType } from '../../../flowTypes';
+
+import NewButton from '../Button/NewButton';
 
 import { getButtonText, type Direction, type ButtonValues } from './utils';
 import m from './messages';
 
 /*
-  Customize by providing custom texts. Example:
-*/
+  * prop: previousTexts | nextTexts: Customize controls by providing custom texts
+    based on wizard state. See example below.
+    
+  <Controls
+    nextTexts={{
+      start: 'Draw roof',
+      default: 'Neste',
+    }}
+    previousTexts={{
+      default: 'Go backwards',
+    }}
+
+    Note: Not all keys need to be specified in order to override a single one. In the example above
+    only nextStart.start, nextStart.default and previousTexts.default are overridden.
+
+  */
 
 const mergeDefaultAndProps = (intl, nextTexts?, previousTexts?) => ({
   nextTexts: {
@@ -30,10 +46,7 @@ const mergeDefaultAndProps = (intl, nextTexts?, previousTexts?) => ({
 type Props = {
   nextTexts?: ButtonValues,
   previousTexts?: ButtonValues,
-  intl: {
-    formatMessage: Function,
-  },
-};
+} & IntlType;
 
 class Controls extends React.Component<Props> {
   changeStep = (direction: Direction) => {
@@ -50,11 +63,10 @@ class Controls extends React.Component<Props> {
     const nextText = getButtonText(mergedTexts.nextTexts, this.context);
     const prevText = getButtonText(mergedTexts.previousTexts, this.context);
 
-    // TODO: Add disabled prop to NewButton.js and change component from Button to NewButton
     return (
       <div className="tc">
         <div className="mb3">
-          <Button
+          <NewButton
             onClick={() => {
               if (this.context.isLastStep) {
                 this.changeStep('complete');
@@ -62,15 +74,17 @@ class Controls extends React.Component<Props> {
               this.changeStep('next');
             }}>
             {nextText}
-          </Button>
+          </NewButton>
         </div>
         {!this.context.isFirstStep && (
           <div>
-            <Button blank onClick={() => this.context.changeStep('previous')}>
+            <NewButton
+              blank
+              onClick={() => this.context.changeStep('previous')}>
               <span className="underline text-o-gray-disabled f5">
                 {prevText}
               </span>
-            </Button>
+            </NewButton>
           </div>
         )}
       </div>
