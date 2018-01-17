@@ -27,4 +27,12 @@ export default defineMessages({
     id: `${I18N_NAMESPACE}.previousDefault`,
     defaultMessage: 'Forrige',
   },
+  wordError: {
+    id: `${I18N_NAMESPACE}.wordError`,
+    defaultMessage: 'Feil',
+  },
+  wordOk: {
+    id: `${I18N_NAMESPACE}.wordOk`,
+    defaultMessage: 'Ok',
+  },
 });

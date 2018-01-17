@@ -51,6 +51,12 @@ class Wizard extends React.Component<Props, State> {
       isLastStep: this.state.isLastStep,
       errorMessage: this.state.errorMessage,
 
+      dismissError: () => {
+        this.setState({
+          errorMessage: '',
+        });
+      },
+
       /*
         Called in componentDidMount() lifecycle of Step.js
         It sets the FIRST_ELEMENT to make the wizard always start at the first registered Step element.
@@ -104,6 +110,7 @@ class Wizard extends React.Component<Props, State> {
             direction,
             isFirstStep: nextStep < 1,
             isLastStep: nextStep === this.state.steps.length - 1,
+            errorMessage: '',
           },
           this.stateDebugger,
         );
@@ -158,6 +165,7 @@ Wizard.childContextTypes = {
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  dismissError: PropTypes.func.isRequired,
 };
 
 export default Wizard;
