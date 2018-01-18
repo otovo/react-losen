@@ -49,7 +49,7 @@ const ErrorMessage = ({ intl }: Props = {}, context: Context) => (
             }}>
             <Alert
               title={intl.formatMessage(m.wordError)}
-              className="o-shadow1 mw6">
+              className="o-shadow mw6">
               <p className="mt0">{context.errorMessage}</p>
               <div className="tc">
                 <NewButton
