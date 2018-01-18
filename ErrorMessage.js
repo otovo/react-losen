@@ -40,13 +40,9 @@ const ErrorMessage = ({ intl }: Props = {}, context: Context) => (
           <div
             className="no-outline"
             role="button"
-            onKeyDown={event => {
-              event.stopPropagation();
-            }}
+            onKeyDown={event => event.stopPropagation()}
             tabIndex="0"
-            onClick={event => {
-              event.stopPropagation();
-            }}>
+            onClick={event => event.stopPropagation()}>
             <Alert
               title={intl.formatMessage(m.wordError)}
               className="o-shadow mw6">
