@@ -87,7 +87,7 @@ class Wizard extends React.Component<Props, State> {
           typeof activeStep.validator === 'function' &&
           !!activeStep.validator()
         ) {
-          if (newDirection === 'next') {
+          if (newDirection === 'next' || newDirection === 'complete') {
             const validationResult = activeStep.validator();
             return this.showErrorMessage(validationResult);
           }
