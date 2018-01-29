@@ -10,6 +10,7 @@ export type OnPartialChange = (name: string) => OnChangeType;
 export type WizardStep = {
   name: string,
   validator: ?ValidatorFunction,
+  autoSkip: ?boolean,
 };
 
 export type Context = {
@@ -18,7 +19,12 @@ export type Context = {
   isLastStep: boolean,
   errorMessage: string,
   changeStep: (direction: Direction) => void,
-  registerStep: (name: string, validator?: ValidatorFunction) => void,
+  updateStep: (name: string, updateData: Object) => void,
+  registerStep: (
+    name: string,
+    validator?: ValidatorFunction,
+    autoSkip?: boolean,
+  ) => void,
 };
 
 export type ButtonValues = {
@@ -37,19 +43,45 @@ export const getButtonText = (texts: ButtonValues, context: Context) => {
   return texts.default;
 };
 
+/*
+  Function `findLastStep()`
+    Iterates over the n last steps (starting from nextStep index) and returns the last
+    one where autoSkip property is not true.
+*/
+export const findLastStep = (
+  steps: Array<WizardStep>,
+  startIndex?: number = 0,
+) => {
+  let last = startIndex;
+  steps.slice(startIndex).forEach((el, index) => {
+    if (!el.autoSkip) {
+      last = startIndex + index;
+    }
+  });
+  return last;
+};
+
 export const getSafeNext = (
   currentIndex: number,
-  numberOfSteps: number,
+  steps: Array<WizardStep>,
   direction: Direction,
 ) => {
+  const numberOfSteps = steps.length;
   const nextStep =
     direction === 'previous' ? currentIndex - 1 : currentIndex + 1;
 
   if (nextStep < 0) {
     return 0;
   }
+  const lastValidStep = findLastStep(steps);
+
+  if (lastValidStep < nextStep) {
+    return lastValidStep;
+  }
+
   if (nextStep >= numberOfSteps) {
     return numberOfSteps - 1;
   }
+
   return nextStep;
 };

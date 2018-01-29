@@ -4,6 +4,7 @@ import log from 'loglevel';
 import PropTypes from 'prop-types';
 import {
   getSafeNext,
+  findLastStep,
   type Direction,
   type ValidatorFunction,
   type OnPartialChange,
@@ -14,6 +15,7 @@ import {
 const emptyStep = {
   name: '',
   validator: () => '',
+  autoSkip: null,
 };
 
 type Props = {
@@ -65,13 +67,32 @@ class Wizard extends React.Component<Props, State> {
         Note: The first element to register is implicitly a start_step (as is the last one a finishing_step).
       */
 
-      registerStep: (name: string, validateFunction?: ValidatorFunction) => {
+      registerStep: (
+        name: string,
+        validateFunction?: ValidatorFunction,
+        autoSkip?: boolean,
+      ) => {
         const FIRST_ELEMENT = 0;
         this.setState((prevState: State) => ({
           ...prevState,
           activeStep: prevState.steps[FIRST_ELEMENT] || name,
           activeStepIndex: FIRST_ELEMENT,
-          steps: [...prevState.steps, { name, validator: validateFunction }],
+          steps: [
+            ...prevState.steps,
+            { name, validator: validateFunction, autoSkip },
+          ],
+        }));
+      },
+
+      // This function finds and updates data in a given step in an immutable fashion
+      updateStep: (name, updatedData) => {
+        const stepIndex = this.state.steps.findIndex(el => el.name === name);
+        this.setState((prevState: State) => ({
+          steps: [
+            ...prevState.steps.slice(0, stepIndex),
+            { ...prevState.steps[stepIndex], ...updatedData },
+            ...prevState.steps.slice(stepIndex + 1),
+          ],
         }));
       },
 
@@ -100,7 +121,7 @@ class Wizard extends React.Component<Props, State> {
         const direction = newDirection || this.state.direction;
         const nextStep = getSafeNext(
           this.state.activeStepIndex,
-          this.state.steps.length,
+          this.state.steps,
           direction,
         );
 
@@ -110,7 +131,7 @@ class Wizard extends React.Component<Props, State> {
             activeStepIndex: nextStep,
             direction,
             isFirstStep: nextStep < 1,
-            isLastStep: nextStep === this.state.steps.length - 1,
+            isLastStep: nextStep === findLastStep(this.state.steps, nextStep),
             errorMessage: '',
           },
           this.stateDebugger,
@@ -167,6 +188,7 @@ Wizard.childContextTypes = {
   registerStep: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
   dismissError: PropTypes.func.isRequired,
+  updateStep: PropTypes.func.isRequired,
 };
 
 export default Wizard;

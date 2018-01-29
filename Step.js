@@ -24,7 +24,11 @@ class Step extends React.Component<Props, any> {
   };
 
   componentDidMount() {
-    this.context.registerStep(this.props.name, this.props.validator);
+    this.context.registerStep(
+      this.props.name,
+      this.props.validator,
+      this.props.autoSkip,
+    );
   }
 
   componentWillReceiveProps(nextProps: Props, nextContext: Context) {
@@ -33,6 +37,13 @@ class Step extends React.Component<Props, any> {
       this.props.autoSkip
     ) {
       this.context.changeStep();
+    }
+
+    if (nextProps.autoSkip !== this.props.autoSkip) {
+      // autoskip has changed. Lets notify the wizard
+      this.context.updateStep(this.props.name, {
+        autoSkip: nextProps.autoSkip,
+      });
     }
   }
 
@@ -51,6 +62,7 @@ Step.contextTypes = {
   }).isRequired,
   changeStep: PropTypes.func.isRequired,
   registerStep: PropTypes.func.isRequired,
+  updateStep: PropTypes.func.isRequired,
 };
 
 export default Step;
