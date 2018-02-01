@@ -19,7 +19,7 @@ const emptyStep = {
 };
 
 type Props = {
-  onComplete: Object => void,
+  onComplete: (wizardData: Object, currentStep: string) => void,
   debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => React.Node,
 };
@@ -170,7 +170,7 @@ class Wizard extends React.Component<Props, State> {
   };
 
   onComplete = () => {
-    this.props.onComplete(this.state.stepData);
+    this.props.onComplete(this.state.stepData, this.state.activeStep.name);
   };
 
   render() {
