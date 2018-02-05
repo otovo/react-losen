@@ -44,11 +44,11 @@ export const getButtonText = (texts: ButtonValues, context: Context) => {
 };
 
 /*
-  Function `findLastStep()`
-    Iterates over the n last steps (starting from nextStep index) and returns the last
-    one where autoSkip property is not true.
+  Function `findLastValidStepIndex()`
+    Iterates over the n last steps (starting from nextStep index) and returns the last index
+    where autoSkip property is not true.
 */
-export const findLastStep = (
+export const findLastValidStepIndex = (
   steps: Array<WizardStep>,
   startIndex?: number = 0,
 ) => {
@@ -73,7 +73,7 @@ export const getSafeNext = (
   if (nextStep < 0) {
     return 0;
   }
-  const lastValidStep = findLastStep(steps);
+  const lastValidStep = findLastValidStepIndex(steps);
 
   if (lastValidStep < nextStep) {
     return lastValidStep;

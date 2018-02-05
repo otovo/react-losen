@@ -4,7 +4,7 @@ import log from 'loglevel';
 import PropTypes from 'prop-types';
 import {
   getSafeNext,
-  findLastStep,
+  findLastValidStepIndex,
   type Direction,
   type ValidatorFunction,
   type OnPartialChange,
@@ -131,7 +131,8 @@ class Wizard extends React.Component<Props, State> {
             activeStepIndex: nextStep,
             direction,
             isFirstStep: nextStep < 1,
-            isLastStep: nextStep === findLastStep(this.state.steps, nextStep),
+            isLastStep:
+              nextStep === findLastValidStepIndex(this.state.steps, nextStep),
             errorMessage: '',
           },
           this.stateDebugger,
