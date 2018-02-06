@@ -71,18 +71,17 @@ class Controls extends React.Component<Props> {
     const prevText = getButtonText(mergedTexts.previousTexts, this.context);
 
     return (
-      <div className="tc">
-        <div className="mb3">
-          <NewButton
-            onClick={() => {
-              if (this.context.isLastStep) {
-                this.changeStep('complete');
-              }
-              this.changeStep('next');
-            }}>
-            {nextText}
-          </NewButton>
-        </div>
+      <div className="tc mv3">
+        <NewButton
+          className="mb3"
+          onClick={() => {
+            if (this.context.isLastStep) {
+              this.changeStep('complete');
+            }
+            this.changeStep('next');
+          }}>
+          {nextText}
+        </NewButton>
         {!this.context.isFirstStep && (
           <div>
             <NewButton
