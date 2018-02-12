@@ -156,7 +156,7 @@ class Wizard extends React.Component<Props, State> {
   };
 
   onPartialChange = (name: string) => (data: Object) => {
-    const newStepData = data ? { [name]: data } : {};
+    const newStepData = data !== 'undefined' ? { [name]: data } : {};
     this.setState(
       prevState => ({
         ...prevState,
