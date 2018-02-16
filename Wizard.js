@@ -20,6 +20,11 @@ const emptyStep = {
 
 type Props = {
   onComplete: (wizardData: Object, currentStep: string) => void,
+  onStepChange?: (
+    prevStepName: string,
+    nextStepName: string,
+    stepData: Object,
+  ) => void,
   debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => React.Node,
 };
@@ -36,6 +41,10 @@ type State = {
 };
 
 class Wizard extends React.Component<Props, State> {
+  static defaultProps = {
+    onStepChange: () => {},
+  };
+
   state = {
     activeStep: emptyStep,
     activeStepIndex: 0,
@@ -63,7 +72,7 @@ class Wizard extends React.Component<Props, State> {
       /*
         Called in componentDidMount() lifecycle of Step.js
         It sets the FIRST_ELEMENT to make the wizard always start at the first registered Step element.
-        
+
         Note: The first element to register is implicitly a start_step (as is the last one a finishing_step).
       */
 
@@ -103,7 +112,9 @@ class Wizard extends React.Component<Props, State> {
         // TODO: Direction should probably be renamed. Can be of type <'' | 'next' | 'previous' | 'complete'>
       */
       changeStep: (newDirection?: Direction) => {
-        const { activeStep } = this.state;
+        const { activeStep, stepData, steps } = this.state;
+        const { onStepChange } = this.props;
+
         if (
           typeof activeStep.validator === 'function' &&
           !!activeStep.validator()
@@ -124,6 +135,12 @@ class Wizard extends React.Component<Props, State> {
           this.state.steps,
           direction,
         );
+
+        const prevStepName = activeStep.name;
+        const nextStepName = steps[nextStep].name;
+        if (onStepChange && !steps[nextStep].autoSkip) {
+          onStepChange(prevStepName, nextStepName, stepData);
+        }
 
         return this.setState(
           {
