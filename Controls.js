@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { type IntlType } from '../../../flowTypes';
 
-import NewButton from '../Button/NewButton';
+import Button from '../Button/NewButton';
 
 import {
   getButtonText,
@@ -70,27 +70,27 @@ class Controls extends React.Component<Props> {
     const nextText = getButtonText(mergedTexts.nextTexts, this.context);
     const prevText = getButtonText(mergedTexts.previousTexts, this.context);
 
+    const { changeStep, isFirstStep, isLastStep } = this.context;
     return (
       <div className="tc mv3">
-        <NewButton
+        <Button
           className="mb3"
+          color={isLastStep ? 'blue' : 'peach'}
           onClick={() => {
-            if (this.context.isLastStep) {
+            if (isLastStep) {
               this.changeStep('complete');
             }
             this.changeStep('next');
           }}>
           {nextText}
-        </NewButton>
-        {!this.context.isFirstStep && (
+        </Button>
+        {!isFirstStep && (
           <div>
-            <NewButton
-              blank
-              onClick={() => this.context.changeStep('previous')}>
+            <Button blank onClick={() => changeStep('previous')}>
               <span className="underline text-o-gray-disabled f5">
                 {prevText}
               </span>
-            </NewButton>
+            </Button>
           </div>
         )}
       </div>
