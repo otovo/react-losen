@@ -72,9 +72,9 @@ class Controls extends React.Component<Props> {
 
     const { changeStep, isFirstStep, isLastStep } = this.context;
     return (
-      <div className="tc mv3">
+      <div className="tc">
         <Button
-          className="mb3"
+          className={!isFirstStep ? 'mb3' : ''}
           color={isLastStep ? 'blue' : 'peach'}
           onClick={() => {
             if (isLastStep) {
