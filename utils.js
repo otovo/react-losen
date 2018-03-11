@@ -27,22 +27,6 @@ export type Context = {
   ) => void,
 };
 
-export type ButtonValues = {
-  start: string,
-  finish: string,
-  default: string,
-};
-
-export const getButtonText = (texts: ButtonValues, context: Context) => {
-  if (context.isFirstStep) {
-    return texts.start;
-  }
-  if (context.isLastStep) {
-    return texts.finish;
-  }
-  return texts.default;
-};
-
 /*
   Function `findLastValidStepIndex()`
     Iterates over the n last steps (starting from nextStep index) and returns the last index

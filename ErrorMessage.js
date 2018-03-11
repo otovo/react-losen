@@ -45,7 +45,7 @@ const ErrorMessage = ({ intl }: Props = {}, context: Context) => (
             onClick={event => event.stopPropagation()}>
             <Alert
               title={intl.formatMessage(m.wordError)}
-              className="o-shadow mw6">
+              className="o-shadow mw6 bg-white">
               <p className="mt0">{context.errorMessage}</p>
               <div className="tc">
                 <NewButton
