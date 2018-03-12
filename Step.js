@@ -16,7 +16,7 @@ type Props = {
  validate if it's cool to advance to the next step.
 */
 
-class Step extends React.Component<Props, any> {
+class Step extends React.Component<Props> {
   context: Context;
 
   static defaultProps = {
