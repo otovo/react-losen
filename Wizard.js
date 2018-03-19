@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import { type Node, Component } from 'react';
 import log from 'loglevel';
 import PropTypes from 'prop-types';
 import {
@@ -26,7 +26,7 @@ type Props = {
     stepData: Object,
   ) => void,
   debug?: boolean,
-  render: (stepData: Object, func: OnPartialChange) => React.Node,
+  render: (stepData: Object, func: OnPartialChange) => Node,
 };
 
 type State = {
@@ -37,10 +37,10 @@ type State = {
   isLastStep: boolean,
   steps: Array<WizardStep>,
   stepData: Object,
-  errorMessage: string,
+  errorNode: Node,
 };
 
-class Wizard extends React.Component<Props, State> {
+class Wizard extends Component<Props, State> {
   static defaultProps = {
     onStepChange: () => {},
   };
@@ -53,7 +53,7 @@ class Wizard extends React.Component<Props, State> {
     isLastStep: false,
     steps: [],
     stepData: {},
-    errorMessage: '',
+    errorNode: null,
   };
 
   getChildContext(): Context {
@@ -61,11 +61,11 @@ class Wizard extends React.Component<Props, State> {
       activeStep: this.state.activeStep,
       isFirstStep: this.state.isFirstStep,
       isLastStep: this.state.isLastStep,
-      errorMessage: this.state.errorMessage,
+      errorNode: this.state.errorNode,
 
       dismissError: () => {
         this.setState({
-          errorMessage: '',
+          errorNode: null,
         });
       },
 
@@ -150,7 +150,7 @@ class Wizard extends React.Component<Props, State> {
             isFirstStep: nextStep < 1,
             isLastStep:
               nextStep === findLastValidStepIndex(this.state.steps, nextStep),
-            errorMessage: '',
+            errorNode: null,
           },
           this.stateDebugger,
         );
@@ -158,10 +158,10 @@ class Wizard extends React.Component<Props, State> {
     };
   }
 
-  showErrorMessage = (msg: ?string) => {
-    if (msg) {
+  showErrorMessage = (errorMsgNode: ?Node) => {
+    if (errorMsgNode) {
       this.setState({
-        errorMessage: msg,
+        errorNode: errorMsgNode,
       });
     }
   };
@@ -204,7 +204,7 @@ Wizard.childContextTypes = {
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  errorNode: PropTypes.node,
   dismissError: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired,
 };

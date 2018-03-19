@@ -1,8 +1,10 @@
 // @flow
+import { type Node } from 'react';
+
 type StepTypes = 'next' | 'previous' | 'complete';
 export type Direction = ?StepTypes;
 
-export type ValidatorFunction = () => ?string;
+export type ValidatorFunction = () => ?Node;
 
 export type OnChangeType = (data: any) => void;
 export type OnPartialChange = (name: string) => OnChangeType;
@@ -17,7 +19,7 @@ export type Context = {
   activeStep: WizardStep,
   isFirstStep: boolean,
   isLastStep: boolean,
-  errorMessage: string,
+  errorNode: Node,
   changeStep: (direction: Direction) => void,
   updateStep: (name: string, updateData: Object) => void,
   registerStep: (
