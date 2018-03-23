@@ -32,35 +32,37 @@ const ErrorMessage = ({ intl }: Props = {}, context: Context) => (
       }
     }}
     className={`absolute absolute--fill ${
-      context.errorNode ? 'z-1' : 'no-click'
+      context.errorNode ? 'z-1' : 'no-click z-1'
     }`}>
     <div className="dt h-100 center">
       <div className="dtc v-mid pb6">
-        <JumpInAnimation renderChild={!!context.errorNode}>
-          <div
-            className="no-outline"
-            role="button"
-            onKeyDown={event => event.stopPropagation()}
-            tabIndex="0"
-            onClick={event => event.stopPropagation()}>
-            <Alert
-              title={intl.formatMessage(m.wordError)}
-              className="o-shadow mw6 bg-white tc">
-              {typeof context.errorNode === 'string' && (
-                <p className="mt0">{context.errorNode}</p>
-              )}
-              {typeof context.errorNode === 'object' && context.errorNode}
-              <div className="tc">
-                <NewButton
-                  square
-                  passive
-                  color="white"
-                  onClick={() => context.dismissError()}>
-                  <T {...m.wordOk} />
-                </NewButton>
-              </div>
-            </Alert>
-          </div>
+        <JumpInAnimation name="error-message" distance={80}>
+          {context.errorNode ? (
+            <div
+              className="no-outline"
+              role="button"
+              onKeyDown={event => event.stopPropagation()}
+              tabIndex="0"
+              onClick={event => event.stopPropagation()}>
+              <Alert
+                title={intl.formatMessage(m.wordError)}
+                className="o-shadow1 mw6 bg-white tc">
+                {typeof context.errorNode === 'string' && (
+                  <p className="mt0">{context.errorNode}</p>
+                )}
+                {typeof context.errorNode === 'object' && context.errorNode}
+                <div className="tc">
+                  <NewButton
+                    square
+                    passive
+                    color="white"
+                    onClick={() => context.dismissError()}>
+                    <T {...m.wordOk} />
+                  </NewButton>
+                </div>
+              </Alert>
+            </div>
+          ) : null}
         </JumpInAnimation>
       </div>
     </div>
