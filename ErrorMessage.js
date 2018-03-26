@@ -45,7 +45,7 @@ const ErrorMessage = ({ intl }: Props = {}, context: Context) => (
               tabIndex="0"
               onClick={event => event.stopPropagation()}>
               <Alert
-                title={intl.formatMessage(m.wordError)}
+                title={intl.formatMessage(m.errorTitle)}
                 className="o-shadow1 mw6 bg-white tc">
                 {typeof context.errorNode === 'string' && (
                   <p className="mt0">{context.errorNode}</p>

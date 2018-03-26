@@ -27,9 +27,9 @@ export default defineMessages({
     id: `${I18N_NAMESPACE}.previousDefault`,
     defaultMessage: 'Forrige',
   },
-  wordError: {
-    id: `${I18N_NAMESPACE}.wordError`,
-    defaultMessage: 'Feil',
+  errorTitle: {
+    id: `${I18N_NAMESPACE}.errorTitle`,
+    defaultMessage: 'Slik gjør du det',
   },
   wordOk: {
     id: `${I18N_NAMESPACE}.wordOk`,
