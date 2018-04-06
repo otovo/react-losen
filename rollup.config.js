@@ -2,9 +2,9 @@ var flow = require('rollup-plugin-flow');
 var babel = require('rollup-plugin-babel');
 
 export default {
-    input: 'index.js',
+    input: './src/entry.js',
     output: {
-      file: 'dist/react-wizard.js',
+      file: 'index.js',
       format: 'cjs'
     },
     plugins: [flow({ pretty: true }),  babel({
