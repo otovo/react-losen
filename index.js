@@ -45,6 +45,8 @@ const getSafeNext = (currentIndex, steps, direction) => {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 const emptyStep = {
   name: '',
   validator: () => '',
@@ -85,6 +87,8 @@ class Wizard extends React.Component {
   }
 
   getChildContext() {
+    var _this = this;
+
     return {
       activeStep: this.state.activeStep,
       isFirstStep: this.state.isFirstStep,
@@ -125,39 +129,49 @@ class Wizard extends React.Component {
         Secondary: Called from Step.js if autoSkip prop is true. This is why we store the direction
          // TODO: Direction should probably be renamed. Can be of type <'' | 'next' | 'previous' | 'complete'>
       */
-      changeStep: newDirection => {
-        const { activeStep, stepData, steps } = this.state;
-        const { onStepChange } = this.props;
+      changeStep: (() => {
+        var _ref = _asyncToGenerator(function* (newDirection) {
+          const { activeStep, stepData, steps } = _this.state;
+          const { onStepChange } = _this.props;
 
-        if (typeof activeStep.validator === 'function' && !!activeStep.validator()) {
-          if (newDirection === 'next' || newDirection === 'complete') {
-            const validationResult = activeStep.validator();
-            return this.showErrorMessage(validationResult);
+          try {
+            if (newDirection === 'next' || newDirection === 'complete') {
+              if (typeof activeStep.validator === 'function') {
+                yield activeStep.validator();
+              }
+            }
+
+            if (newDirection === 'complete') {
+              _this.onComplete();
+            } else {
+              const direction = newDirection || _this.state.direction;
+              const nextStep = getSafeNext(_this.state.activeStepIndex, _this.state.steps, direction);
+
+              const prevStepName = activeStep.name;
+              const nextStepName = steps[nextStep].name;
+              if (onStepChange && !steps[nextStep].autoSkip) {
+                onStepChange(prevStepName, nextStepName, stepData);
+              }
+
+              _this.setState({
+                activeStep: _this.state.steps[nextStep] || emptyStep,
+                activeStepIndex: nextStep,
+                direction,
+                isFirstStep: nextStep < 1,
+                isLastStep: nextStep === findLastValidStepIndex(_this.state.steps, nextStep),
+                errorNode: null
+              }, _this.stateDebugger);
+            }
+          } catch (error) {
+            console.error('error', error);
+            // this.showErrorMessage(validationResult);
           }
-        }
+        });
 
-        if (newDirection === 'complete') {
-          return this.onComplete();
-        }
-
-        const direction = newDirection || this.state.direction;
-        const nextStep = getSafeNext(this.state.activeStepIndex, this.state.steps, direction);
-
-        const prevStepName = activeStep.name;
-        const nextStepName = steps[nextStep].name;
-        if (onStepChange && !steps[nextStep].autoSkip) {
-          onStepChange(prevStepName, nextStepName, stepData);
-        }
-
-        return this.setState({
-          activeStep: this.state.steps[nextStep] || emptyStep,
-          activeStepIndex: nextStep,
-          direction,
-          isFirstStep: nextStep < 1,
-          isLastStep: nextStep === findLastValidStepIndex(this.state.steps, nextStep),
-          errorNode: null
-        }, this.stateDebugger);
-      }
+        return function changeStep(_x) {
+          return _ref.apply(this, arguments);
+        };
+      })()
     };
   }
 

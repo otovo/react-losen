@@ -111,49 +111,51 @@ class Wizard extends Component<Props, State> {
 
         // TODO: Direction should probably be renamed. Can be of type <'' | 'next' | 'previous' | 'complete'>
       */
-      changeStep: (newDirection?: Direction) => {
+      changeStep: async (newDirection?: Direction) => {
         const { activeStep, stepData, steps } = this.state;
         const { onStepChange } = this.props;
 
-        if (
-          typeof activeStep.validator === 'function' &&
-          !!activeStep.validator()
-        ) {
+        try {
           if (newDirection === 'next' || newDirection === 'complete') {
-            const validationResult = activeStep.validator();
-            return this.showErrorMessage(validationResult);
+            if (typeof activeStep.validator === 'function') {
+              await activeStep.validator();
+            }
           }
+
+          if (newDirection === 'complete') {
+            this.onComplete();
+          } else {
+            const direction = newDirection || this.state.direction;
+            const nextStep = getSafeNext(
+              this.state.activeStepIndex,
+              this.state.steps,
+              direction,
+            );
+
+            const prevStepName = activeStep.name;
+            const nextStepName = steps[nextStep].name;
+            if (onStepChange && !steps[nextStep].autoSkip) {
+              onStepChange(prevStepName, nextStepName, stepData);
+            }
+
+            this.setState(
+              {
+                activeStep: this.state.steps[nextStep] || emptyStep,
+                activeStepIndex: nextStep,
+                direction,
+                isFirstStep: nextStep < 1,
+                isLastStep:
+                  nextStep ===
+                  findLastValidStepIndex(this.state.steps, nextStep),
+                errorNode: null,
+              },
+              this.stateDebugger,
+            );
+          }
+        } catch (error) {
+          console.error('error', error);
+          // this.showErrorMessage(validationResult);
         }
-
-        if (newDirection === 'complete') {
-          return this.onComplete();
-        }
-
-        const direction = newDirection || this.state.direction;
-        const nextStep = getSafeNext(
-          this.state.activeStepIndex,
-          this.state.steps,
-          direction,
-        );
-
-        const prevStepName = activeStep.name;
-        const nextStepName = steps[nextStep].name;
-        if (onStepChange && !steps[nextStep].autoSkip) {
-          onStepChange(prevStepName, nextStepName, stepData);
-        }
-
-        return this.setState(
-          {
-            activeStep: this.state.steps[nextStep] || emptyStep,
-            activeStepIndex: nextStep,
-            direction,
-            isFirstStep: nextStep < 1,
-            isLastStep:
-              nextStep === findLastValidStepIndex(this.state.steps, nextStep),
-            errorNode: null,
-          },
-          this.stateDebugger,
-        );
       },
     };
   }
