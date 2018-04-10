@@ -1,4 +1,4 @@
-# react-wizard
+# react-losen
 A super customisable Wizard for React and React Native
 
 
