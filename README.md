@@ -1,6 +1,7 @@
 # react-losen
 A super customisable Wizard for React and React Native
 
+**Note:** This package is under development. We are expecting to have an initial release (with documentation :tada:) ready within a couple of weeks.
 
 ## Components
 This package contains three main components: 
