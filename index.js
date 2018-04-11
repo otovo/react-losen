@@ -163,8 +163,7 @@ class Wizard extends React.Component {
               }, _this.stateDebugger);
             }
           } catch (error) {
-            console.error('error', error);
-            // this.showErrorMessage(validationResult);
+            _this.showErrorMessage(error);
           }
         });
 
