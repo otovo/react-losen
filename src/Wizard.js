@@ -153,8 +153,7 @@ class Wizard extends Component<Props, State> {
             );
           }
         } catch (error) {
-          console.error('error', error);
-          // this.showErrorMessage(validationResult);
+          this.showErrorMessage(error);
         }
       },
     };
