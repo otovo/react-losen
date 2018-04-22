@@ -18,7 +18,8 @@
     "flow-bin": "^0.69.0",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-flow": "^1.1.1"
+    "rollup-plugin-flow": "^1.1.1",
+    "tachyons": "^4.9.1"
   },
   "dependencies": {
     "loglevel": "^1.6.1",
