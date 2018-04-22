@@ -61,17 +61,13 @@ This fires up Storybook and serves it on `http://localhost:9001/`. Storybook use
 
 ### Building
 
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here. for example:
+To create a bundle run
 
-```shell
-./configure
-make
-make install
+```
+yarn bundle
 ```
 
-Here again you should state what actually happens when the code above gets
-executed.
+This command runs `rollup --config` which builds the library and puts it in `./index.js`.
 
 ### Deploying / Publishing
 
