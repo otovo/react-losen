@@ -1,7 +1,6 @@
 ![react-losen](https://user-images.githubusercontent.com/2470775/39097362-8093ab6e-465b-11e8-845e-b21b893d6091.png)
 
-# react-losen &middot; 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/otovo/react-losen/blob/master/LICENSE)
+# react-losen &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/otovo/react-losen/blob/master/LICENSE)
 
 > A brutallty simple wizard for React and React Native. Note: This module is under active development and not ready for release yet.
 
@@ -38,7 +37,7 @@ import { Wizard, Step, Controls } from 'react-losen';
       )}
     />
     </Fragment>
-	)}
+  )}
 />	
 
 ```
