@@ -1,12 +1,12 @@
 // @flow
-import React, { type Node } from 'react';
+import React from 'react';
 
 type Props = {
-  children: Node,
+  emoji: string,
 };
 
-const Emoji = ({ children: emoji, ...rest }) => (
-  <span className="f1" role="img" {...rest}>
+const Emoji = ({ emoji, ...rest }: Props) => (
+  <span className="f1" role="img" aria-label="emoji" {...rest}>
     {emoji}
   </span>
 );
