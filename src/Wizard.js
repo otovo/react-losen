@@ -27,6 +27,7 @@ type Props = {
   ) => void,
   debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => Node,
+  onError?: (error: Object) => void,
 };
 
 type State = {
@@ -37,7 +38,6 @@ type State = {
   isLastStep: boolean,
   steps: Array<WizardStep>,
   stepData: Object,
-  errorNode: Node,
 };
 
 class Wizard extends Component<Props, State> {
@@ -53,7 +53,6 @@ class Wizard extends Component<Props, State> {
     isLastStep: false,
     steps: [],
     stepData: {},
-    errorNode: null,
   };
 
   getChildContext(): Context {
@@ -61,13 +60,6 @@ class Wizard extends Component<Props, State> {
       activeStep: this.state.activeStep,
       isFirstStep: this.state.isFirstStep,
       isLastStep: this.state.isLastStep,
-      errorNode: this.state.errorNode,
-
-      dismissError: () => {
-        this.setState({
-          errorNode: null,
-        });
-      },
 
       /*
         Called in componentDidMount() lifecycle of Step.js
@@ -147,25 +139,18 @@ class Wizard extends Component<Props, State> {
                 isLastStep:
                   nextStep ===
                   findLastValidStepIndex(this.state.steps, nextStep),
-                errorNode: null,
               },
               this.stateDebugger,
             );
           }
         } catch (error) {
-          this.showErrorMessage(error);
+          if(this.props.onError) {
+            this.props.onError(error);
+          }
         }
       },
     };
   }
-
-  showErrorMessage = (errorMsgNode: ?Node) => {
-    if (errorMsgNode) {
-      this.setState({
-        errorNode: errorMsgNode,
-      });
-    }
-  };
 
   stateDebugger = () => {
     if (this.props.debug) {
@@ -205,7 +190,6 @@ Wizard.childContextTypes = {
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
-  errorNode: PropTypes.node,
   dismissError: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired,
 };
