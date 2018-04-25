@@ -1,0 +1,4 @@
+/dist/
+/node_modules/
+setupJest.js
+index.js
