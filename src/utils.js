@@ -19,7 +19,6 @@ export type Context = {
   activeStep: WizardStep,
   isFirstStep: boolean,
   isLastStep: boolean,
-  errorNode: Node,
   changeStep: (direction: Direction) => void,
   updateStep: (name: string, updateData: Object) => void,
   registerStep: (

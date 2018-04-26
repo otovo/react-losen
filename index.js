@@ -64,14 +64,7 @@ class Wizard extends React.Component {
       isFirstStep: true,
       isLastStep: false,
       steps: [],
-      stepData: {},
-      errorNode: null
-    }, this.showErrorMessage = errorMsgNode => {
-      if (errorMsgNode) {
-        this.setState({
-          errorNode: errorMsgNode
-        });
-      }
+      stepData: {}
     }, this.stateDebugger = () => {
       if (this.props.debug) {
         log.debug('WIZARD STATE UPDATED', this.state);
@@ -93,13 +86,6 @@ class Wizard extends React.Component {
       activeStep: this.state.activeStep,
       isFirstStep: this.state.isFirstStep,
       isLastStep: this.state.isLastStep,
-      errorNode: this.state.errorNode,
-
-      dismissError: () => {
-        this.setState({
-          errorNode: null
-        });
-      },
 
       /*
         Called in componentDidMount() lifecycle of Step.js
@@ -158,12 +144,13 @@ class Wizard extends React.Component {
                 activeStepIndex: nextStep,
                 direction,
                 isFirstStep: nextStep < 1,
-                isLastStep: nextStep === findLastValidStepIndex(_this.state.steps, nextStep),
-                errorNode: null
+                isLastStep: nextStep === findLastValidStepIndex(_this.state.steps, nextStep)
               }, _this.stateDebugger);
             }
           } catch (error) {
-            _this.showErrorMessage(error);
+            if (_this.props.onError) {
+              _this.props.onError(error);
+            }
           }
         });
 
@@ -191,7 +178,6 @@ Wizard.childContextTypes = {
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
-  errorNode: PropTypes.node,
   dismissError: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired
 };
