@@ -136,7 +136,13 @@ class Wizard extends React.Component {
               const prevStepName = activeStep.name;
               const nextStepName = steps[nextStep].name;
               if (onStepChange && !steps[nextStep].autoSkip) {
-                onStepChange(prevStepName, nextStepName, stepData);
+                onStepChange({
+                  prevStepName,
+                  nextStepIndex: nextStep,
+                  nextStepName,
+                  numSteps: steps.length,
+                  stepData
+                });
               }
 
               _this.setState({
@@ -270,9 +276,9 @@ Controls.contextTypes = {
 };
 
 var entry = {
-    Wizard,
-    Step,
-    Controls
+  Wizard,
+  Step,
+  Controls
 };
 
 module.exports = entry;

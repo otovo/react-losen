@@ -18,13 +18,17 @@ const emptyStep = {
   autoSkip: null,
 };
 
+export type OnStepChangeType = {
+  nextStepIndex: number,
+  nextStepName: string,
+  numSteps: number,
+  prevStepName: string,
+  stepData: Object,
+};
+
 type Props = {
   onComplete: (wizardData: Object, currentStep: string) => void,
-  onStepChange?: (
-    prevStepName: string,
-    nextStepName: string,
-    stepData: Object,
-  ) => void,
+  onStepChange: OnStepChangeType => void,
   debug?: boolean,
   render: (stepData: Object, func: OnPartialChange) => Node,
   onError?: (error: Object) => void,
@@ -127,7 +131,13 @@ class Wizard extends Component<Props, State> {
             const prevStepName = activeStep.name;
             const nextStepName = steps[nextStep].name;
             if (onStepChange && !steps[nextStep].autoSkip) {
-              onStepChange(prevStepName, nextStepName, stepData);
+              onStepChange({
+                prevStepName,
+                nextStepIndex: nextStep,
+                nextStepName,
+                numSteps: steps.length,
+                stepData,
+              });
             }
 
             this.setState(
@@ -144,7 +154,7 @@ class Wizard extends Component<Props, State> {
             );
           }
         } catch (error) {
-          if(this.props.onError) {
+          if (this.props.onError) {
             this.props.onError(error);
           }
         }
