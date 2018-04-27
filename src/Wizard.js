@@ -190,7 +190,6 @@ Wizard.childContextTypes = {
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
-  dismissError: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired,
 };
 

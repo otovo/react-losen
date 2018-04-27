@@ -178,7 +178,6 @@ Wizard.childContextTypes = {
   isFirstStep: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   registerStep: PropTypes.func.isRequired,
-  dismissError: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired
 };
 
@@ -270,9 +269,9 @@ Controls.contextTypes = {
 };
 
 var entry = {
-    Wizard,
-    Step,
-    Controls
+  Wizard,
+  Step,
+  Controls
 };
 
 module.exports = entry;
