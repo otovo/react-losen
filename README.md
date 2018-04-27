@@ -91,11 +91,12 @@ At react-losen, we use the following tools:
 - [Prettier](https://prettier.io/) for code formatting
 - [Eslint](https://eslint.org/) for linting
 
-## Api Reference
+## API reference
 
 * `Wizard`, the main orchestrator. It has 2 required props 
     - render: This takes a set of `Step` as children. Minumum 2. Start and end
     - onComplete: What to do when the Wizard is complete.
+    - onStepChange is called each time the step changes. This function is not called on initial load.
 * `Step`, a wrapper for what you want to show as a step. It registers the step on mount to the Wizard context
 * `Controls`, the controller for which step to show next. Has 2 directions: next and previous. It also knows if you are on the last or first step.
 
