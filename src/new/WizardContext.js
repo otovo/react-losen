@@ -9,4 +9,4 @@ export type ContextType = ?{|
   stepList: Array<StepType>,
 |};
 
-export const WizardContext = createContext<ContextType>(null);
+export const WizardContext = createContext();

@@ -25,9 +25,9 @@ class StepWrapper extends Component<StepProps, State> {
   render() {
     const { name, children } = this.props;
 
-    if (!this.state.isActive) {
-      return null;
-    }
+    // if (!this.state.isActive) {
+    //   return null;
+    // }
 
     log.debug(name, 'is rendering');
     return children;
