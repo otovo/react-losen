@@ -107,6 +107,7 @@ class Wizard extends Component<Props, State> {
 
         // TODO: Direction should probably be renamed. Can be of type <'' | 'next' | 'previous' | 'complete'>
       */
+      // $FlowFixMe
       changeStep: async (newDirection?: Direction) => {
         const { activeStep, stepData, steps } = this.state;
         const { onStepChange } = this.props;
