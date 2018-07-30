@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import NewWizard from './NewWizard';
+import StepWrapper from './StepWrapper';
 import { WizardContext } from './WizardContext';
 
 const mockContext = {
@@ -25,5 +26,20 @@ describe('NewWizard', () => {
     const { root } = testRenderer;
 
     expect(root.findByType('h1').children).toEqual(['First step']);
+  });
+});
+
+describe('StepWrapper', () => {
+  test('it should receive context as props', () => {
+    const testRenderer = renderer.create(
+      <Provider>
+        <NewWizard.Step>
+          <div />
+        </NewWizard.Step>
+      </Provider>,
+    );
+
+    const { root } = testRenderer;
+    expect(root.findByType(StepWrapper).props.bestWizard).toBe('react-losen');
   });
 });
