@@ -8,14 +8,21 @@
   "scripts": {
     "bundle": "rollup --config",
     "start": "start-storybook -p 9001 -c .storybook",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "test": "jest",
+    "test:tdd": "jest --watch"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.2",
     "@storybook/react": "^3.4.2",
     "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.4.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
@@ -27,7 +34,9 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.77.0",
+    "jest": "^23.4.2",
     "prettier": "^1.14.0",
+    "react-test-renderer": "^16.4.1",
     "rollup": "^0.58.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-flow": "^1.1.1",
