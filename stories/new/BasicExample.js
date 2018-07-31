@@ -13,7 +13,7 @@ const NewWizardBasic = () => (
     <Wizard>
       <Wizard.Step name="firstStep">
         <h1>
-          <Emoji className="f3" emoji="🖕" /> First step
+          <Emoji className="f3" emoji="👍" /> First step
         </h1>
       </Wizard.Step>
     </Wizard>

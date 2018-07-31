@@ -1,9 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import NewWizard from './NewWizard';
+import NewWizard, { WizardContext } from './NewWizard';
 import StepWrapper from './StepWrapper';
-import { WizardContext } from './WizardContext';
 
 const mockContext = {
   bestWizard: 'react-losen',
@@ -40,6 +39,8 @@ describe('StepWrapper', () => {
     );
 
     const { root } = testRenderer;
-    expect(root.findByType(StepWrapper).props.bestWizard).toBe('react-losen');
+    expect(root.findByType(StepWrapper).props.context.bestWizard).toBe(
+      'react-losen',
+    );
   });
 });

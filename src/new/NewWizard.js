@@ -1,21 +1,22 @@
 // @flow
-import React, { type Node, Component } from 'react';
-import StepWrapper, { type StepProps } from './StepWrapper';
-import { WizardContext, type ContextType } from './WizardContext';
+import React, { Component, createContext, type ElementProps } from 'react';
+
 import { ConsumeValidator } from './ConsumeValidator';
+import StepWrapper from './StepWrapper';
+import type { WizardProps, WizardState } from './flowtypes';
 
-type WizardProps = {
-  children: Node,
-};
+/**
+ * Explicitly specifying the type of our context value
+ * doesn't work (I blame Storybook).
+ * But Flow can still infer the type as long as we place the
+ * instantiaton in the same file as the Provider.
+ */
+export const WizardContext = createContext(null);
 
-type State = {
-  context: ContextType,
-};
-
-class NewWizard extends Component<WizardProps, State> {
-  static Step = (props: StepProps) => (
+class NewWizard extends Component<WizardProps, WizardState> {
+  static Step = (props: ElementProps<typeof StepWrapper>) => (
     <ConsumeValidator>
-      {context => <StepWrapper {...context} {...props} />}
+      {context => <StepWrapper context={context} {...props} />}
     </ConsumeValidator>
   );
 

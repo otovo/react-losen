@@ -1,9 +1,11 @@
 // @flow
 import React, { type Node } from 'react';
-import { WizardContext, type ContextType } from './WizardContext';
+
+import { WizardContext } from './NewWizard';
+import type { ContextType } from './flowtypes';
 
 type ConsumerProps = {
-  children: ContextType => Node,
+  children: (obj: ContextType) => Node,
 };
 
 export function ConsumeValidator(props: ConsumerProps) {
