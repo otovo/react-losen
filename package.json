@@ -35,7 +35,6 @@
     "loglevel": "^1.6.1",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "react-intl": "^2.4.0"
+    "react-dom": "^16.8.1"
   }
 }
