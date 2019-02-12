@@ -1,6 +1,6 @@
 {
   "name": "react-losen",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "A super customisable Wizard for React and React Native",
   "main": "index.js",
   "repository": "git@github.com:otovo/react-losen.git",
@@ -10,10 +10,11 @@
     "eslint": "eslint ."
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
     "babel-eslint": "^8.2.3",
-    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -25,10 +26,10 @@
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.70.0",
     "prettier": "^1.12.1",
-    "rollup": "^0.58.1",
-    "rollup-plugin-babel": "^3.0.3",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-flow": "^1.1.1",
-    "rollup-plugin-uglify": "^3.0.0",
+    "rollup-plugin-uglify": "^6.0.2",
     "tachyons": "^4.11.1"
   },
   "dependencies": {
