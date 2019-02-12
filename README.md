@@ -49,15 +49,7 @@ import { Wizard, Step, Controls } from 'react-losen';
 
 ### Developing
 
-For development, this project uses [Storybook](https://storybook.js.org/). It's configured to loading stories dynamically by looking for files with a `.story.js`-extension.
-
-You can browse stories and see examples by running the development environment:
-
-```shell
-yarn start
-```
-
-This fires up Storybook and serves it on `http://localhost:9001/`. Storybook uses Webpack with HMR under the hood and has basic support for [CSS, Images and static files, Markdown and JSON](https://storybook.js.org/configurations/default-config/).
+TODO
 
 ### Building
 

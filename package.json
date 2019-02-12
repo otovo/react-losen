@@ -7,12 +7,9 @@
   "license": "MIT",
   "scripts": {
     "bundle": "rollup --config",
-    "start": "start-storybook -p 9001 -c .storybook",
     "eslint": "eslint ."
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.2",
-    "@storybook/react": "^3.4.2",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
