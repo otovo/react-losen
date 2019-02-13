@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "bundle": "rollup --config",
-    "eslint": "eslint . --cache"
+    "eslint": "eslint . --cache",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -15,6 +17,9 @@
     "@babel/preset-env": "^7.3.1",
     "babel-eslint": "^10.0.1",
     "babel-preset-es2015-rollup": "^3.0.0",
+    "docz": "^0.13.7",
+    "docz-plugin-css": "^0.11.0",
+    "docz-theme-default": "^0.13.7",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
