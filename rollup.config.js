@@ -1,4 +1,3 @@
-const flow = require('rollup-plugin-flow');
 const babel = require('rollup-plugin-babel');
 const { uglify } = require('rollup-plugin-uglify');
 
@@ -9,7 +8,6 @@ export default {
     format: 'cjs',
   },
   plugins: [
-    flow({ pretty: true }),
     babel({
       exclude: 'node_modules/**',
     }),
