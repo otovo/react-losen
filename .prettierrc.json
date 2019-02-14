@@ -4,5 +4,5 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "jsxBracketSameLine": true,
-  "parser": "flow"
+  "parser": "mdx"
 }
