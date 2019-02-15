@@ -3,6 +3,7 @@ import { css } from 'docz-plugin-css'; // eslint-disable-line
 export default {
   src: './pages',
   public: './public',
+  dest: '/docs',
   files: '**/*.{md,markdown,mdx}',
   htmlContext: {
     favicon:
