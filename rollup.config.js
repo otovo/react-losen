@@ -1,6 +1,5 @@
-const flow = require('rollup-plugin-flow');
 const babel = require('rollup-plugin-babel');
-const uglify = require('rollup-plugin-uglify');
+const { uglify } = require('rollup-plugin-uglify');
 
 export default {
   input: './src/entry.js',
@@ -9,12 +8,8 @@ export default {
     format: 'cjs',
   },
   plugins: [
-    flow({ pretty: true }),
     babel({
-      babelrc: false,
       exclude: 'node_modules/**',
-      presets: ['stage-1'],
-      plugins: [],
     }),
     uglify(),
   ],
