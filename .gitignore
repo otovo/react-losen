@@ -2,3 +2,4 @@ node_modules/
 .eslintcache
 .docz
 pages/_index.mdx
+docs/
