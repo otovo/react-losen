@@ -23,7 +23,7 @@ import { Wizard, Step, Controls } from 'react-losen';
 <Wizard
   render={() => (
     <Fragment>
-      <Step name="start">First step</Step>
+      <Step name="start">Step one</Step>
       <Step name="second-step">This is the second step</Step>
       <Step name="final-step">Click next to finish</Step>
 
