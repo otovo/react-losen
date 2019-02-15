@@ -9,7 +9,7 @@
     "bundle": "rollup --config",
     "eslint": "eslint . --cache",
     "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "docz:build": "cp README.md ./pages/_index.mdx && docz build"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
