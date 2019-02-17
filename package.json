@@ -3,13 +3,17 @@
   "version": "1.0.1",
   "description": "A super customisable Wizard for React and React Native",
   "main": "src/index.js",
-  "repository": "git@github.com:otovo/react-losen.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/otovo/react-losen.git"
+  },
   "license": "MIT",
   "scripts": {
     "build": "pack build",
     "eslint": "eslint . --cache",
     "docz:dev": "docz dev",
-    "docz:build": "cp README.md ./pages/_index.mdx && docz build"
+    "docz:build": "cp README.md ./pages/_index.mdx && docz build",
+    "pack:publish": "pack publish"
   },
   "@pika/pack": {
     "pipeline": [
