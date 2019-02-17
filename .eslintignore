@@ -1,4 +1,4 @@
 /dist/
+/pkg/
+/docs/
 /node_modules/
-setupJest.js
-index.js
