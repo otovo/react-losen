@@ -1,6 +1,6 @@
 {
   "name": "react-losen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A super customisable Wizard for React and React Native",
   "main": "src/index.js",
   "repository": "git@github.com:otovo/react-losen.git",
