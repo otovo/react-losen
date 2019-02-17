@@ -64,7 +64,7 @@ This command uses [`@pika/pack`](https://www.pikapkg.com/blog/introducing-pika-p
 
 ### Publishing
 
-Publish new versions with `yarn publish`. Pika guides you through the Through a wizard, this helps you bump the version number and publish to npm.
+Publish new versions with `yarn pack:publish`. Pika guides you through the Through a wizard, this helps you bump the version number and publish to npm.
 
 ### Deloying docs
 
