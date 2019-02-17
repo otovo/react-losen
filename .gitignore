@@ -3,3 +3,4 @@ node_modules/
 .docz
 pages/_index.mdx
 docs/
+pkg/
