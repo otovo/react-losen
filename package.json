@@ -6,7 +6,6 @@
   "repository": "git@github.com:otovo/react-losen.git",
   "license": "MIT",
   "scripts": {
-    "bundle": "rollup --config",
     "build": "pack build",
     "eslint": "eslint . --cache",
     "docz:dev": "docz dev",
@@ -31,7 +30,6 @@
     "@pika/plugin-build-web": "^0.3.11",
     "@pika/plugin-standard-pkg": "^0.3.11",
     "babel-eslint": "^10.0.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
     "docz": "^0.13.7",
     "docz-plugin-css": "^0.11.0",
     "docz-theme-default": "^0.13.7",
@@ -46,9 +44,6 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "prettier": "^1.16.4",
-    "rollup": "^1.1.2",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-uglify": "^6.0.2",
     "tachyons": "^4.11.1"
   },
   "dependencies": {
