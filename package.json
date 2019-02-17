@@ -43,11 +43,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.93.0",
     "prettier": "^1.16.4",
     "tachyons": "^4.11.1"
   },
   "dependencies": {
-    "flow-bin": "^0.92.1",
     "loglevel": "^1.6.1",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
