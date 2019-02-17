@@ -51,21 +51,24 @@ import { Wizard, Step, Controls } from 'react-losen';
 
 ### Developing
 
-TODO
+Use `docz:dev` to spin up a dev server which let's you view and play with the source components. To get started, create a `.md` in the `./pages` directory. It uses MDX which let's you import and write
+JSX within markdown documents. For more info out the [Docz website](https://www.docz.site/) and read up on the [MDX spec](https://github.com/mdx-js/mdx/).
 
 ### Building
 
-To create a bundle run
-
 ```
-yarn bundle
+yarn build
 ```
 
-This command runs `rollup --config` which builds the library and puts it in `./index.js`.
+This command uses [`@pika/pack`](https://www.pikapkg.com/blog/introducing-pika-pack/) to build for browsers. Plugins are specified under `@pika/pack` in `package.json`.
 
-### Deploying / Publishing
+### Publishing
 
-TODO
+Publish new versions with `yarn publish`. Pika guides you through the Through a wizard, this helps you bump the version number and publish to npm.
+
+### Deloying docs
+
+The documentation is built by running `yarn docz:build`. This generates a static site in `./docs/`. Currently the site is deployed and hosted with [Zeit's Now](https://zeit.co/blog/now-static).
 
 ## Versioning
 
