@@ -9,9 +9,11 @@ route: /
 
 > A brutallty simple wizard for React and React Native.
 
-*Note:* This module _works_, but we got some nice changes coming out soon:
-  - Async step validation
-  - Upgrade to new React Context API
+**Note:** This module is currently in beta. First official release is right around the corner, and will include some nice changes:
+  [-] Async step validation
+  [-] Upgrade to new React Context API
+
+Please submit issues/feedback on GitHub ✌️
 
 ## Install
 
@@ -26,23 +28,23 @@ import { Wizard, Step, Controls } from 'react-losen';
 
 <Wizard
   render={() => (
-    <Fragment>
+    <>
       <Step name="start">Step one</Step>
       <Step name="second-step">This is the second step</Step>
       <Step name="final-step">Click next to finish</Step>
 
       <Controls
         render={(onNext, onPrevious, isFirstStep) => (
-          <Fragment>
+          <>
             <Button onClick={onPrevious} disabled={isFirstStep}>
               Previous
             </Button>
 
             <Button onClick={onNext}>Next</Button>
-          </Fragment>
+          </>
         )}
       />
-    </Fragment>
+    </>
   )}
 />;
 ```
