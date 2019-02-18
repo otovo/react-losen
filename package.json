@@ -1,10 +1,13 @@
 {
   "name": "react-losen",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A super customisable Wizard for React and React Native",
   "homepage": "https://docs-geycgwirqi.now.sh/",
   "main": "src/index.js",
-  "keywords": ["react", "wizard"],
+  "keywords": [
+    "react",
+    "wizard"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/otovo/react-losen.git"
@@ -31,7 +34,9 @@
           "name": "reactLosen"
         }
       ],
-      ["pika-plugin-minify"]
+      [
+        "pika-plugin-minify"
+      ]
     ]
   },
   "devDependencies": {
