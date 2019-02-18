@@ -24,7 +24,10 @@
         "@pika/plugin-build-web"
       ],
       [
-        "@pika/plugin-build-umd", {"name": "reactLosen"}
+        "@pika/plugin-build-umd",
+        {
+          "name": "reactLosen"
+        }
       ]
     ]
   },
@@ -57,7 +60,6 @@
   },
   "dependencies": {
     "prop-types": "^15.7.1",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react": "^16.8.1"
   }
 }
