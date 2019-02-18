@@ -29,7 +29,8 @@
         {
           "name": "reactLosen"
         }
-      ]
+      ],
+      ["pika-plugin-minify"]
     ]
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "flow-bin": "^0.93.0",
+    "pika-plugin-minify": "^0.1.0",
     "prettier": "^1.16.4",
     "tachyons": "^4.11.1"
   },
