@@ -7,7 +7,11 @@ route: /
 
 # react-losen &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/otovo/react-losen/blob/master/LICENSE)
 
-> A brutallty simple wizard for React and React Native. Note: This module is under active development and not ready for release yet.
+> A brutallty simple wizard for React and React Native.
+
+*Note:* This module _works_, but we got some nice changes coming out soon:
+  - Async step validation
+  - Upgrade to new React Context API
 
 ## Install
 
