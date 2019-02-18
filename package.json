@@ -4,6 +4,7 @@
   "description": "A super customisable Wizard for React and React Native",
   "homepage": "https://docs-geycgwirqi.now.sh/",
   "main": "src/index.js",
+  "keywords": ["react", "wizard"],
   "repository": {
     "type": "git",
     "url": "https://github.com/otovo/react-losen.git"

@@ -10,8 +10,9 @@ route: /
 > A brutallty simple wizard for React and React Native.
 
 **Note:** This module is currently in beta. First official release is right around the corner, and will include some nice changes:
-  [-] Async step validation
-  [-] Upgrade to new React Context API
+
+  - [ ] Async step validation
+  - [ ] Upgrade to new React Context API
 
 Please submit issues/feedback on GitHub ✌️
 
