@@ -56,7 +56,6 @@
     "tachyons": "^4.11.1"
   },
   "dependencies": {
-    "loglevel": "^1.6.1",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"

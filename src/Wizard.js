@@ -1,6 +1,5 @@
 // @flow
 import { type Node, Component } from 'react';
-import log from 'loglevel';
 import PropTypes from 'prop-types';
 import {
   getSafeNext,
@@ -167,7 +166,7 @@ class Wizard extends Component<Props, State> {
 
   stateDebugger = () => {
     if (this.props.debug) {
-      log.debug('WIZARD STATE UPDATED', this.state);
+      console.debug('WIZARD STATE UPDATED', this.state); // eslint-disable-line
     }
   };
 
