@@ -1,6 +1,6 @@
 {
   "name": "react-losen",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "A super customisable Wizard for React and React Native",
   "main": "src/index.js",
   "repository": {
