@@ -47,6 +47,8 @@ type State = {
 class Wizard extends Component<Props, State> {
   static defaultProps = {
     onStepChange: () => {},
+    debug: false,
+    onError: null,
   };
 
   state = {
@@ -108,7 +110,13 @@ class Wizard extends Component<Props, State> {
         // TODO: Direction should probably be renamed. Can be of type <'' | 'next' | 'previous' | 'complete'>
       */
       changeStep: async (newDirection?: Direction) => {
-        const { activeStep, stepData, steps } = this.state;
+        const {
+          activeStep,
+          stepData,
+          steps,
+          direction,
+          activeStepIndex,
+        } = this.state;
         const { onStepChange } = this.props;
 
         try {
@@ -121,12 +129,8 @@ class Wizard extends Component<Props, State> {
           if (newDirection === 'complete') {
             this.onComplete();
           } else {
-            const direction = newDirection || this.state.direction;
-            const nextStep = getSafeNext(
-              this.state.activeStepIndex,
-              this.state.steps,
-              direction,
-            );
+            const _direction = newDirection || direction;
+            const nextStep = getSafeNext(activeStepIndex, steps, _direction);
 
             const prevStepName = activeStep.name;
             const nextStepName = steps[nextStep].name;
@@ -142,13 +146,12 @@ class Wizard extends Component<Props, State> {
 
             this.setState(
               {
-                activeStep: this.state.steps[nextStep] || emptyStep,
+                activeStep: steps[nextStep] || emptyStep,
                 activeStepIndex: nextStep,
-                direction,
+                direction: _direction,
                 isFirstStep: nextStep < 1,
                 isLastStep:
-                  nextStep ===
-                  findLastValidStepIndex(this.state.steps, nextStep),
+                  nextStep === findLastValidStepIndex(steps, nextStep),
               },
               this.stateDebugger,
             );

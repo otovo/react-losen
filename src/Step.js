@@ -21,6 +21,7 @@ class Step extends React.Component<Props> {
 
   static defaultProps = {
     autoSkip: false,
+    validator: null,
   };
 
   componentDidMount() {

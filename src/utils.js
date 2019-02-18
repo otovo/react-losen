@@ -19,7 +19,7 @@ export type Context = {
   activeStep: WizardStep,
   isFirstStep: boolean,
   isLastStep: boolean,
-  changeStep: (direction: Direction) => void,
+  changeStep: (direction: Direction) => Promise<void>,
   updateStep: (name: string, updateData: Object) => void,
   registerStep: (
     name: string,
