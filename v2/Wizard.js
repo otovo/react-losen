@@ -47,7 +47,7 @@ const Wizard = ({ children, onComplete }: Props) => {
     const next = findNextValid(steps, index);
 
     const nextAction =
-      index === steps.length - 1
+      findNextValid(steps, index) === index
         ? () => onComplete(steps[index].name)
         : () => setIndex(next);
 
@@ -86,8 +86,8 @@ const Wizard = ({ children, onComplete }: Props) => {
         onNext,
         onPrevious,
         isLoading,
-        isFirst: index === 0,
-        isLast: index === steps.length - 1,
+        isFirst: findPreviousValid(steps, index) === index,
+        isLast: findNextValid(steps, index) === index,
       }}>
       <StepContext.Provider
         value={{
