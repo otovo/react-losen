@@ -14,10 +14,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "pack build",
+    "build:src": "pack build",
+    "build:docs": "cp README.md ./pages/_index.mdx && docz build",
     "eslint": "eslint . --cache",
-    "docz:dev": "docz dev",
-    "docz:build": "cp README.md ./pages/_index.mdx && docz build",
+    "dev": "docz dev",
     "pack:publish": "pack publish"
   },
   "@pika/pack": {

@@ -19,5 +19,5 @@ action "actions/npm@master" {
   uses = "actions/npm@master"
   needs = ["install deps"]
   runs = "yarn"
-  args = "docz:build"
+  args = "build:docs"
 }
