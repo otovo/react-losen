@@ -17,11 +17,11 @@ export function useControlsContext() {
 }
 
 type Props = {
-  // onComplete: (currentStep: string) => void,
+  onComplete: (currentStep: string) => void,
   children: React$Node,
 };
 
-const Wizard = ({ children }: Props) => {
+const Wizard = ({ children, onComplete }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
   const [isLoading, setLoadingState] = useState(false);
@@ -46,11 +46,16 @@ const Wizard = ({ children }: Props) => {
     const { validator } = steps[index];
     const next = findNextValid(steps, index);
 
+    const nextAction =
+      index === steps.length - 1
+        ? () => onComplete(steps[index].name)
+        : () => setIndex(next);
+
     if (validator) {
       try {
         setLoadingState(true);
         await new Promise(validator);
-        setIndex(next);
+        nextAction();
       } catch (error) {
         if (error instanceof ValidationError) {
           console.error('ReactLosen', error); // eslint-disable-line
@@ -61,7 +66,7 @@ const Wizard = ({ children }: Props) => {
         setLoadingState(false);
       }
     } else {
-      setIndex(next);
+      nextAction();
     }
   }
 

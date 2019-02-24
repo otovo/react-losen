@@ -15,11 +15,11 @@ const Controls = () => {
   } = useControlsContext();
   return (
     <div className="flex items-center justify-center pa4">
-      <Button onClick={onPrevious} disabled={isFirst}>
+      <Button onClick={onPrevious} disabled={isLoading || isFirst}>
         <Emoji emoji="👈" /> <span className="ml3">Previous</span>
       </Button>
-      <Button onClick={onNext} disabled={isLoading || isLast}>
-        <span className="mr3">Next</span>{' '}
+      <Button onClick={onNext} disabled={isLoading}>
+        <span className="mr3">{isLast ? 'Finish' : 'Next'}</span>{' '}
         <Emoji emoji={isLoading ? '😴' : '👉'} />
       </Button>
     </div>

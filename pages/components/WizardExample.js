@@ -8,9 +8,13 @@ import Controls from './Controls';
 const WizardExample = () => {
   const [stepEnabled, setEnabledStep] = useState(true);
   const [passValidation, setPassValidation] = useState(true);
+
+  function onComplete(step) {
+    console.log('Wizard completed ', step);
+  }
   return (
     <>
-      <Wizard>
+      <Wizard onComplete={onComplete}>
         <div>
           <Step name="1">
             <div>Første steg</div>
@@ -29,7 +33,13 @@ const WizardExample = () => {
             }>
             <div>Andre steg</div>
           </Step>
-          <Step name="3">
+          <Step
+            name="3"
+            validator={resolve =>
+              setTimeout(() => {
+                resolve();
+              }, 800)
+            }>
             <div>Tredje steg</div>
           </Step>
         </div>
