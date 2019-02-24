@@ -10,14 +10,14 @@ describe('findNextValid', () => {
     expect(next).toBe(1);
   });
 
-  test('it skips single step where autoStep === true', () => {
+  test('it skips single step where autoSkip === true', () => {
     const steps = [regularStep, { autoSkip: true }, regularStep];
 
     const next = findNextValid(steps, 0);
     expect(next).toBe(2);
   });
 
-  test('it skips multiple steps where autoStep === true', () => {
+  test('it skips multiple steps where autoSkip === true', () => {
     const steps = [
       regularStep,
       { autoSkip: true },
@@ -27,6 +27,12 @@ describe('findNextValid', () => {
 
     const next = findNextValid(steps, 0);
     expect(next).toBe(3);
+  });
+
+  test('it handles that last step is autoSkip === true', () => {
+    const steps = [regularStep, skipStep, skipStep];
+    const next = findNextValid(steps, 0);
+    expect(next).toBe(0);
   });
 
   test('it respects array boundaries if last element', () => {
@@ -49,13 +55,13 @@ describe('findPreviousValid', () => {
     expect(previous).toBe(1);
   });
 
-  test('it skips a step if previous has autoStep === true', () => {
+  test('it skips a step if previous has autoSkip === true', () => {
     const steps = [regularStep, regularStep, skipStep, regularStep];
     const previous = findPreviousValid(steps, steps.length - 1);
     expect(previous).toBe(1);
   });
 
-  test('it skips multiple steps if previous has autoStep === true', () => {
+  test('it skips multiple steps if previous has autoSkip === true', () => {
     const steps = [regularStep, skipStep, skipStep, regularStep];
     const previous = findPreviousValid(steps, steps.length - 1);
     expect(previous).toBe(0);
