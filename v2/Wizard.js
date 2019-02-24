@@ -1,6 +1,8 @@
 // @flow
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+import { findNextValid, findPreviousValid } from './utils';
+
 export const StepContext = createContext(null);
 export const ControlsContext = createContext(null);
 
@@ -52,15 +54,17 @@ const Wizard = ({ children }: Props) => {
   }
 
   function onNext() {
-    setIndex(steps.length > index + 1 ? index + 1 : index);
+    const next = findNextValid(steps, index);
+    setIndex(next);
   }
 
   function onPrevious() {
-    setIndex(index - 1 >= 0 ? index - 1 : index);
+    const prev = findPreviousValid(steps, index);
+    setIndex(prev);
   }
 
   useEffect(() => {
-    // for debugging info only
+    // for debugging purposes only
     console.info('steps updated', steps);
   }, [steps]);
 
