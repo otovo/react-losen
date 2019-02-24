@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+
 // @flow
 import { Component, type Node } from 'react';
 import PropTypes from 'prop-types';
