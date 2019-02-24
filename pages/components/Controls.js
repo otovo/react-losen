@@ -5,19 +5,14 @@ import { useControlsContext } from '../../v2/Wizard';
 import Button from './Button';
 import Emoji from './Emoji';
 
-type Props = {
-  // children: ReactNode,
-};
-
-const Controls = (props: Props) => {
-  console.log('Controls says hi');
-  const { onNext, onPrevious, isFirstStep, isLastStep } = useControlsContext();
+const Controls = () => {
+  const { onNext, onPrevious, isFirst, isLast } = useControlsContext();
   return (
     <div className="flex items-center justify-center pa4">
-      <Button onClick={onPrevious} disabled={isFirstStep}>
+      <Button onClick={onPrevious} disabled={isFirst}>
         <Emoji emoji="👈" /> <span className="ml3">Previous</span>
       </Button>
-      <Button onClick={onNext} disabled={isLastStep}>
+      <Button onClick={onNext} disabled={isLast}>
         <span className="mr3">Next</span> <Emoji emoji="👉" />
       </Button>
     </div>

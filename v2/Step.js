@@ -8,7 +8,6 @@ type Props = {
 
 const Step = ({ children, name, validator, autoSkip }: Props) => {
   const { registerStep, activeStep } = useStepContext();
-  console.log(registerStep, activeStep);
 
   registerStep({
     name,

@@ -1,14 +1,15 @@
 // @flow
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
-export const WizardContext = createContext(null);
+export const StepContext = createContext(null);
+export const ControlsContext = createContext(null);
 
 export function useStepContext() {
-  return useContext(WizardContext);
+  return useContext(StepContext);
 }
 
 export function useControlsContext() {
-  return useContext(WizardContext);
+  return useContext(ControlsContext);
 }
 
 type Props = {
@@ -20,37 +21,52 @@ type Props = {
   children: React$Node,
 };
 
-type State = {
-  activeStep: Losen$Step,
-  activeStepIndex: number,
-  direction: Losen$Direction,
-  isFirstStep: boolean,
-  isLastStep: boolean,
-  steps: Array<Losen$Step>,
-  // stepData: Object,
-};
+// type State = {
+// activeStep: Losen$Step,
+// activeStepIndex: number,
+// direction: Losen$Direction,
+// isFirstStep: boolean,
+// isLastStep: boolean,
+// steps: Array<Losen$Step>,
+// stepData: Object,
+// };
 
 const Wizard = ({ children }: Props) => {
-  const [activeStep, setActiveStep] = useState({});
+  const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
 
   const registerStep = step => {
-    if (Array.isArray(steps)) {
-      setSteps(steps.push(step));
-      console.log(steps);
+    const alreadyRegistered = steps.map(el => el.name).includes(step.name);
+    if (!alreadyRegistered) {
+      setSteps(prevSteps => [...prevSteps, step]);
     }
   };
 
-  useEffect(() => {
-    if (!Object.keys(activeStep).length) {
-      setActiveStep(steps[0]);
-    }
-  });
+  function onNext() {
+    setIndex(steps.length > index + 1 ? index + 1 : index);
+  }
+
+  function onPrevious() {
+    setIndex(index - 1 >= 0 ? index - 1 : index);
+  }
 
   return (
-    <WizardContext.Provider value={{ registerStep, activeStep }}>
-      {children}
-    </WizardContext.Provider>
+    <ControlsContext.Provider
+      value={{
+        onNext,
+        onPrevious,
+        isFirst: index === 0,
+        isLast: index === steps.length - 1,
+      }}>
+      <StepContext.Provider
+        value={{
+          registerStep,
+          activeStep: steps[index] || {},
+          steps,
+        }}>
+        {children}
+      </StepContext.Provider>
+    </ControlsContext.Provider>
   );
 };
 
