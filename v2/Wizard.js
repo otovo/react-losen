@@ -3,6 +3,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 import { findNextValid, findPreviousValid } from './utils';
 
+export class ValidationError extends Error {}
+
 export const StepContext = createContext(null);
 export const ControlsContext = createContext(null);
 
@@ -15,27 +17,14 @@ export function useControlsContext() {
 }
 
 type Props = {
-  // onComplete: (wizardData: Object, currentStep: string) => void,
-  // onStepChange: OnStepChangeType => void,
-  // debug?: boolean,
-  // render: (stepData: Object, func: OnPartialChange) => Node,
-  // onError?: (error: Object) => void,
+  // onComplete: (currentStep: string) => void,
   children: React$Node,
 };
-
-// type State = {
-// activeStep: Losen$Step,
-// activeStepIndex: number,
-// direction: Losen$Direction,
-// isFirstStep: boolean,
-// isLastStep: boolean,
-// steps: Array<Losen$Step>,
-// stepData: Object,
-// };
 
 const Wizard = ({ children }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
+  const [isLoading, setLoadingState] = useState(false);
 
   function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
@@ -53,9 +42,27 @@ const Wizard = ({ children }: Props) => {
     ]);
   }
 
-  function onNext() {
+  async function onNext() {
+    const { validator } = steps[index];
     const next = findNextValid(steps, index);
-    setIndex(next);
+
+    if (validator) {
+      try {
+        setLoadingState(true);
+        await new Promise(validator);
+        setIndex(next);
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          console.error('ReactLosen', error); // eslint-disable-line
+        } else {
+          throw error;
+        }
+      } finally {
+        setLoadingState(false);
+      }
+    } else {
+      setIndex(next);
+    }
   }
 
   function onPrevious() {
@@ -65,7 +72,7 @@ const Wizard = ({ children }: Props) => {
 
   useEffect(() => {
     // for debugging purposes only
-    console.info('steps updated', steps);
+    console.debug('steps updated', steps); // eslint-disable-line
   }, [steps]);
 
   return (
@@ -73,6 +80,7 @@ const Wizard = ({ children }: Props) => {
       value={{
         onNext,
         onPrevious,
+        isLoading,
         isFirst: index === 0,
         isLast: index === steps.length - 1,
       }}>

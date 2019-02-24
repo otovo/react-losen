@@ -30,7 +30,7 @@ const Step = ({ children, name, validator, autoSkip }: Props) => {
     if (initialized) {
       updateStep(stepInfo);
     }
-  }, [autoSkip]);
+  }, [autoSkip, validator]);
 
   if (activeStep.name !== name) {
     return null;
@@ -45,7 +45,7 @@ const Step = ({ children, name, validator, autoSkip }: Props) => {
 };
 
 Step.defaultProps = {
-  validator: () => null,
+  validator: null,
   autoSkip: false,
 };
 
