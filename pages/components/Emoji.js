@@ -6,7 +6,7 @@ type Props = {
 };
 
 const Emoji = ({ emoji, ...rest }: Props) => (
-  <span className="f1" role="img" aria-label="emoji" {...rest}>
+  <span className="f3" role="img" aria-label="emoji" {...rest}>
     {emoji}
   </span>
 );
