@@ -18,6 +18,8 @@
     "build:docs": "cp README.md ./pages/_index.mdx && docz build",
     "eslint": "eslint . --cache",
     "dev": "docz dev",
+    "test": "jest",
+    "tdd": "jest --watch",
     "pack:publish": "pack publish"
   },
   "@pika/pack": {
@@ -67,6 +69,7 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.2.0",
     "flow-bin": "^0.93.0",
+    "jest": "^24.1.0",
     "pika-plugin-minify": "^0.1.0",
     "prettier": "^1.16.4",
     "tachyons": "^4.11.1"
