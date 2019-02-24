@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStepContext } from './Wizard';
 
 type Props = {
@@ -7,13 +7,30 @@ type Props = {
 } & Losen$Step;
 
 const Step = ({ children, name, validator, autoSkip }: Props) => {
-  const { registerStep, activeStep } = useStepContext();
+  const {
+    registerStep,
+    activeStep,
+    updateStep,
+    initialized,
+  } = useStepContext();
 
-  registerStep({
+  const stepInfo = {
     name,
     validator,
     autoSkip,
-  });
+  };
+
+  useEffect(() => {
+    if (!initialized) {
+      registerStep(stepInfo);
+    }
+  }, [name]);
+
+  useEffect(() => {
+    if (initialized) {
+      updateStep(stepInfo);
+    }
+  }, [autoSkip]);
 
   if (activeStep.name !== name) {
     return null;

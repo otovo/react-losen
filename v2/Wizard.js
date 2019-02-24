@@ -1,5 +1,5 @@
 // @flow
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export const StepContext = createContext(null);
 export const ControlsContext = createContext(null);
@@ -35,12 +35,21 @@ const Wizard = ({ children }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
 
-  const registerStep = step => {
+  function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
     if (!alreadyRegistered) {
       setSteps(prevSteps => [...prevSteps, step]);
     }
-  };
+  }
+
+  function updateStep(step) {
+    const stepIndex = steps.findIndex(el => el.name === step.name);
+    setSteps(prevSteps => [
+      ...prevSteps.slice(0, stepIndex),
+      step,
+      ...prevSteps.slice(stepIndex + 1),
+    ]);
+  }
 
   function onNext() {
     setIndex(steps.length > index + 1 ? index + 1 : index);
@@ -49,6 +58,11 @@ const Wizard = ({ children }: Props) => {
   function onPrevious() {
     setIndex(index - 1 >= 0 ? index - 1 : index);
   }
+
+  useEffect(() => {
+    // for debugging info only
+    console.info('steps updated', steps);
+  }, [steps]);
 
   return (
     <ControlsContext.Provider
@@ -62,7 +76,8 @@ const Wizard = ({ children }: Props) => {
         value={{
           registerStep,
           activeStep: steps[index] || {},
-          steps,
+          initialized: !!steps[index],
+          updateStep,
         }}>
         {children}
       </StepContext.Provider>
