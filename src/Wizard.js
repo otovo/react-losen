@@ -1,20 +1,11 @@
 // @flow
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { findNextValid, findPreviousValid } from './utils';
+import { ControlsContext } from './Controls';
+import { StepContext } from './Step';
 
 export class ValidationError extends Error {}
-
-export const StepContext = createContext(null);
-export const ControlsContext = createContext(null);
-
-export function useStepContext() {
-  return useContext(StepContext);
-}
-
-export function useControlsContext() {
-  return useContext(ControlsContext);
-}
 
 type Props = {
   onComplete: (currentStep: string) => void,

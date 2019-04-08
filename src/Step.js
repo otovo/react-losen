@@ -1,18 +1,16 @@
 // @flow
-import { useEffect } from 'react';
-import { useStepContext } from './Wizard';
+import { useEffect, createContext, useContext } from 'react';
+
+export const StepContext = createContext(null);
 
 type Props = {
   children: React$Node,
 } & Losen$Step;
 
 const Step = ({ children, name, validator, autoSkip }: Props) => {
-  const {
-    registerStep,
-    activeStep,
-    updateStep,
-    initialized,
-  } = useStepContext();
+  const { registerStep, activeStep, updateStep, initialized } = useContext(
+    StepContext,
+  );
 
   const stepInfo = {
     name,
