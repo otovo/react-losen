@@ -29,7 +29,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.2.2":
+"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.2.2", "@babel/core@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.3.tgz#198d6d3af4567be3989550d97e068de94503074f"
   integrity sha512-oDpASqKFlbspQfzAE7yaeTmdljSH2ADIvBlb0RwbStltTuWa0+7CCI1fYVINNv9saHPa1W7oaKeuNuKj+RQCvA==
@@ -765,7 +765,7 @@
     js-levenshtein "^1.1.3"
     semver "^5.3.0"
 
-"@babel/preset-env@^7.1.6", "@babel/preset-env@^7.2.3", "@babel/preset-env@^7.3.1":
+"@babel/preset-env@^7.1.6", "@babel/preset-env@^7.2.3", "@babel/preset-env@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.4.3.tgz#e71e16e123dc0fbf65a52cbcbcefd072fbd02880"
   integrity sha512-FYbZdV12yHdJU5Z70cEg0f6lvtpZ8jFSDakTm7WXeJbLXh4R0ztGEu/SW7G1nJ2ZvKwDhz8YrbA84eYyprmGqw==
@@ -1206,7 +1206,7 @@
   resolved "https://registry.yarnpkg.com/@pika/babel-plugin-esm-import-rewrite/-/babel-plugin-esm-import-rewrite-0.3.14.tgz#61c902058e6896f63345aeb36d06c6c98f7c72f2"
   integrity sha512-eetgWXH6Vec5ArWgLf0wziArZdJvpj4yGq+DyxCatCPEimtdyVPnLGadN3ChqBRHW42yLzq7z4yXOBgI62hSUQ==
 
-"@pika/pack@^0.3.2":
+"@pika/pack@^0.3.6":
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/@pika/pack/-/pack-0.3.6.tgz#3ac3f1f54a8710bfa5b594c42d527e931000ef00"
   integrity sha512-nMoF/Hq7DPIX7dhpF/oEKbIkwsJMM2yhE2GHZKlS67DBDq1XBfBqyAIGHNEhG2nvHDaHK8C3t5DypUMw0hc7zQ==
