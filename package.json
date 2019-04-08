@@ -31,7 +31,12 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg"
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "*.test.js"
+          ]
+        }
       ],
       [
         "@pika/plugin-build-web",
