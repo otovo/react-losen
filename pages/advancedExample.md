@@ -1,6 +1,6 @@
 ---
 
-name: Experimental v2
+name: Advanced example
 
 ---
 import { Playground, PropsTable } from 'docz';
@@ -24,10 +24,17 @@ import WizardExample from './components/WizardExample';
 ## Test
 
 - [ ] Test performance (remove unnecessary renders)
-- [ ] Test nested Wizards – does it even  work??
+- [ ] Test nested Wizards – does it even  work?
 
 ## Feature, or bug?
 
 - [ ] First step is not skippable (initially)
+
+---
+
+
+## Example 
+
+This example uses async validation for step 2 and 3. Use the debug panel to tweak settings
 
 <WizardExample />

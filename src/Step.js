@@ -1,71 +1,47 @@
-/* eslint-disable react/destructuring-assignment */
-
 // @flow
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { type Context, type ValidatorFunction } from './utils';
+import { useEffect } from 'react';
+import { useStepContext } from './Wizard';
 
 type Props = {
-  autoSkip?: boolean,
-  children: React.Node,
-  name: string,
-  validator?: ValidatorFunction,
-};
+  children: React$Node,
+} & Losen$Step;
 
-/*
- This component accepts a name acts as a context provider between Wizard and it's children.
- It register itself on mount and accepts a validator prop. This can be used by the wizard to 
- validate if it's cool to advance to the next step.
-*/
+const Step = ({ children, name, validator, autoSkip }: Props) => {
+  const {
+    registerStep,
+    activeStep,
+    updateStep,
+    initialized,
+  } = useStepContext();
 
-class Step extends React.Component<Props> {
-  context: Context;
-
-  static defaultProps = {
-    autoSkip: false,
-    validator: null,
+  const stepInfo = {
+    name,
+    validator,
+    autoSkip,
   };
 
-  componentDidMount() {
-    this.context.registerStep(
-      this.props.name,
-      this.props.validator,
-      this.props.autoSkip,
-    );
-  }
-
-  componentWillReceiveProps(nextProps: Props, nextContext: Context) {
-    if (
-      nextContext.activeStep.name === this.props.name &&
-      this.props.autoSkip
-    ) {
-      this.context.changeStep();
+  useEffect(() => {
+    if (!initialized) {
+      registerStep(stepInfo);
     }
+  }, [name]);
 
-    if (nextProps.autoSkip !== this.props.autoSkip) {
-      // autoskip has changed. Lets notify the wizard
-      this.context.updateStep(this.props.name, {
-        autoSkip: nextProps.autoSkip,
-      });
+  useEffect(() => {
+    if (initialized) {
+      updateStep(stepInfo);
     }
-  }
+  }, [autoSkip, validator]);
 
-  render() {
-    if (this.context.activeStep.name === this.props.name) {
-      return this.props.children;
-    }
+  if (activeStep.name !== name) {
     return null;
   }
-}
 
-Step.contextTypes = {
-  activeStep: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    validator: PropTypes.func,
-  }).isRequired,
-  changeStep: PropTypes.func.isRequired,
-  registerStep: PropTypes.func.isRequired,
-  updateStep: PropTypes.func.isRequired,
+  return children;
+};
+
+Step.defaultProps = {
+  validator: null,
+  autoSkip: false,
 };
 
 export default Step;

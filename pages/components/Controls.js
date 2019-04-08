@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { useControlsContext } from '../../v2/Wizard';
+import { useControlsContext } from '../../src/Wizard';
 
 import Button from './Button';
 import Emoji from './Emoji';

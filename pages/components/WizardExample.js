@@ -1,8 +1,8 @@
 // @flow
 import React, { useState } from 'react';
 
-import Wizard, { ValidationError } from '../../v2/Wizard';
-import Step from '../../v2/Step';
+import Wizard, { ValidationError } from '../../src/Wizard';
+import Step from '../../src/Step';
 import Controls from './Controls';
 
 const WizardExample = () => {
@@ -17,7 +17,7 @@ const WizardExample = () => {
       <Wizard onComplete={onComplete}>
         <div>
           <Step name="1">
-            <div>Første steg</div>
+            <p className="f3 tc">First step</p>
           </Step>
           <Step
             name="2"
@@ -31,7 +31,7 @@ const WizardExample = () => {
                 }
               }, 800)
             }>
-            <div>Andre steg</div>
+            <p className="f3 tc">Second step</p>
           </Step>
           <Step
             name="3"
@@ -40,7 +40,7 @@ const WizardExample = () => {
                 resolve();
               }, 800)
             }>
-            <div>Tredje steg</div>
+            <p className="f3 tc">Third step</p>
           </Step>
         </div>
 
@@ -49,7 +49,7 @@ const WizardExample = () => {
 
       <hr />
 
-      <div className="pa4">
+      <div className="pa4 courier bg-black-05">
         <h3 className="db">Debug panel</h3>
         <label htmlFor="step-2-checkbox">
           <input
