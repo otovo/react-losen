@@ -22,6 +22,12 @@
     "tdd": "jest --watch",
     "pack:publish": "pack publish"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/pkg/"
+    ]
+  },
   "@pika/pack": {
     "pipeline": [
       [
