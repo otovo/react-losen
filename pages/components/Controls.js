@@ -1,18 +1,14 @@
 // @flow
-import React from 'react';
-import { useControlsContext } from '../../src/Wizard';
+import React, { useContext } from 'react';
+import { ControlsContext } from '../../src';
 
 import Button from './Button';
 import Emoji from './Emoji';
 
 const Controls = () => {
-  const {
-    onNext,
-    onPrevious,
-    isFirst,
-    isLast,
-    isLoading,
-  } = useControlsContext();
+  const { onNext, onPrevious, isFirst, isLast, isLoading } = useContext(
+    ControlsContext,
+  );
   return (
     <div className="flex items-center justify-center pa4">
       <Button onClick={onPrevious} disabled={isLoading || isFirst}>

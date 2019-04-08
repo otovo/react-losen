@@ -1,8 +1,7 @@
 // @flow
 import React, { useState } from 'react';
 
-import Wizard, { ValidationError } from '../../src/Wizard';
-import Step from '../../src/Step';
+import { Wizard, ValidationError, Step } from '../../src';
 import Controls from './Controls';
 
 const WizardExample = () => {
