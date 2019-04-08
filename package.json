@@ -14,10 +14,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "pack build",
+    "build:src": "pack build",
+    "build:docs": "cp README.md ./pages/_index.mdx && docz build",
     "eslint": "eslint . --cache",
-    "docz:dev": "docz dev",
-    "docz:build": "cp README.md ./pages/_index.mdx && docz build",
+    "dev": "docz dev",
+    "test": "jest",
+    "tdd": "jest --watch",
     "pack:publish": "pack publish"
   },
   "@pika/pack": {
@@ -38,6 +40,9 @@
         "pika-plugin-minify"
       ]
     ]
+  },
+  "resolutions": {
+    "docz-core": "^0.13.7"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -62,7 +67,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.2.0",
     "flow-bin": "^0.93.0",
+    "jest": "^24.1.0",
     "pika-plugin-minify": "^0.1.0",
     "prettier": "^1.16.4",
     "tachyons": "^4.11.1"
