@@ -25,15 +25,11 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg"
-      ],
-      [
-        "@pika/plugin-build-web"
-      ],
-      [
-        "@pika/plugin-build-umd",
+        "@pika/plugin-standard-pkg",
         {
-          "name": "reactLosen"
+          "exclude": [
+            "*.test.js"
+          ]
         }
       ],
       [
@@ -50,9 +46,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-flow": "^7.0.0",
     "@pika/pack": "^0.3.6",
-    "@pika/plugin-build-umd": "^0.3.11",
-    "@pika/plugin-build-web": "^0.3.11",
-    "@pika/plugin-standard-pkg": "^0.3.11",
+    "@pika/plugin-standard-pkg": "^0.3.14",
     "babel-eslint": "^10.0.1",
     "docz": "^0.13.7",
     "docz-plugin-css": "^0.11.0",
