@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { Wizard, ValidationError, Step } from '../../src';
 import Controls from './Controls';
+import InputComponent from './InputComponent';
+import StepWithInput from './StepWithInput';
 
 const WizardExample = () => {
   const [stepEnabled, setEnabledStep] = useState(true);
@@ -13,7 +15,7 @@ const WizardExample = () => {
   }
   return (
     <>
-      <Wizard onComplete={onComplete}>
+      <Wizard onComplete={onComplete} debug>
         <div>
           <Step name="1">
             <p className="f3 tc">First step</p>
@@ -30,8 +32,11 @@ const WizardExample = () => {
                 }
               }, 800)
             }>
-            <p className="f3 tc">Second step</p>
+            <InputComponent />
           </Step>
+
+          <StepWithInput />
+
           <Step
             name="3"
             validator={resolve =>
