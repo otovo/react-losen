@@ -10,9 +10,10 @@ export class ValidationError extends Error {}
 type Props = {
   onComplete: (currentStep: string) => void,
   children: React$Node,
+  debug?: Boolean,
 };
 
-const Wizard = ({ children, onComplete }: Props) => {
+const Wizard = ({ children, onComplete, debug }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
   const [isLoading, setLoadingState] = useState(false);
@@ -68,7 +69,9 @@ const Wizard = ({ children, onComplete }: Props) => {
 
   useEffect(() => {
     // for debugging purposes only
-    console.debug('steps updated', steps); // eslint-disable-line
+    if (debug) {
+      console.debug('steps updated', steps); // eslint-disable-line
+    }
   }, [steps]);
 
   return (
@@ -93,4 +96,7 @@ const Wizard = ({ children, onComplete }: Props) => {
   );
 };
 
+Wizard.defaultProps = {
+  debug: false,
+};
 export default Wizard;
