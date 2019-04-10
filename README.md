@@ -64,18 +64,20 @@ JSX within markdown documents. For more info out the [Docz website](https://www.
 ### Building
 
 ```
-yarn build
+yarn run build
 ```
 
 This command uses [`@pika/pack`](https://www.pikapkg.com/blog/introducing-pika-pack/) to build for browsers. Plugins are specified under `@pika/pack` in `package.json`.
 
 ### Publishing
 
-Publish new versions with `yarn pack:publish`. Pika guides you through the Through a wizard, this helps you bump the version number and publish to npm.
+Publish new versions with `yarn run publish`. `Pack` guides you through the Through a wizard, this helps you bump the version number and publish to npm. **Note:** It's importaint to use the `run` argument, as `yarn publish` is a built in command and won't use `Pack`
 
-### Deloying docs
+### Building docs
 
-The documentation is built by running `yarn build:docs`. This generates a static site in `./docs/`. Currently the site is deployed and hosted with [Zeit's Now](https://zeit.co/blog/now-static).
+The documentation is built by running `yarn docs:build`. This generates a static site in `./docs/`. Currently the site is deployed and hosted with [Zeit's Now](https://zeit.co/blog/now-static).
+
+Todo: Add information on how to deploy docs with Now.
 
 ## Versioning
 
@@ -83,11 +85,15 @@ react-losen use [SemVer](http://semver.org/) for versioning. For the versions av
 
 ## Tests
 
-TODO: Add jest.
+Testing is done using the [Jest](https://facebook.github.io/jest/) test
+framework. Assertions is done [with Jest's `Expect`
+matchers](https://facebook.github.io/jest/docs/en/expect.html).
+
+Todo: Add CI.
 
 ## Style guide
 
-At react-losen, we use the following tools:
+For code quality, react-losen use the following tools:
 
 - [Flow](https://flow.org/) for static type checking
 - [Prettier](https://prettier.io/) for code formatting
@@ -95,12 +101,8 @@ At react-losen, we use the following tools:
 
 ## API reference
 
-- `Wizard`, the main orchestrator. It has 2 required props
-  - render: This takes a set of `Step` as children. Minumum 2. Start and end
-  - onComplete: What to do when the Wizard is complete.
-  - onStepChange is called each time the step changes. This function is not called on initial load.
-- `Step`, a wrapper for what you want to show as a step. It registers the step on mount to the Wizard context
-- `Controls`, the controller for which step to show next. Has 2 directions: next and previous. It also knows if you are on the last or first step.
+See [documentation](https://docs-geycgwirqi.now.sh/)
+
 
 ## Licensing
 
