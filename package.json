@@ -14,13 +14,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:docs": "cp README.md ./pages/_index.mdx && docz build",
+    "docs:build": "cp README.md ./pages/_index.mdx && docz build",
     "eslint": "eslint . --cache",
     "dev": "docz dev",
     "test": "jest",
     "tdd": "jest --watch",
-    "pack:build": "pack build",
-    "pack:publish": "pack publish"
+    "build": "pack build",
+    "publish": "pack publish"
   },
   "jest": {
     "testPathIgnorePatterns": [
