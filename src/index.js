@@ -1,5 +1,13 @@
-import Wizard, { ValidationError } from './Wizard';
+// @flow
+import Controls, { ControlsContext } from './Controls';
 import Step, { StepContext } from './Step';
-import { ControlsContext } from './Controls';
+import Wizard, { ValidationError } from './Wizard';
 
-export { Wizard, Step, StepContext, ValidationError, ControlsContext };
+export {
+  Controls,
+  ControlsContext,
+  Step,
+  StepContext,
+  ValidationError,
+  Wizard,
+};
