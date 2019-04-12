@@ -1,10 +1,20 @@
 // @flow
 import React, { useState } from 'react';
 
-const InputComponent = () => {
+type Props = {
+  name: String,
+};
+
+const InputComponent = ({ name }: Props) => {
   const [text, setText] = useState('');
-  console.log('InputComponent says hi');
-  return <textarea value={text} onChange={ev => setText(ev.target.value)} />;
+  return (
+    <textarea
+      className="w-100 h3"
+      placeholder={name}
+      value={text}
+      onChange={ev => setText(ev.target.value)}
+    />
+  );
 };
 
 export default InputComponent;
