@@ -6,6 +6,14 @@ import Controls from './Controls';
 import InputComponent from './InputComponent';
 import StepWithInput from './StepWithInput';
 
+const someAsyncFunc = () =>
+  new Promise(res =>
+    setTimeout(() => {
+      console.log('inner timeout done');
+      res();
+    }, 800),
+  );
+
 const WizardExample = () => {
   const [stepEnabled, setEnabledStep] = useState(true);
   const [passValidation, setPassValidation] = useState(true);
@@ -17,33 +25,28 @@ const WizardExample = () => {
     <>
       <Wizard onComplete={onComplete} debug>
         <div>
-          <Step name="1">
+          <Step
+            name="step 1"
+            validator={() => {
+              console.log('validator done');
+            }}>
             <p className="f3 tc">First step</p>
           </Step>
           <Step
-            name="2"
+            name="step 2"
             autoSkip={!stepEnabled}
-            validator={(resolve, reject) =>
-              setTimeout(() => {
-                if (passValidation) {
-                  resolve();
-                } else {
-                  reject(new ValidationError('Not ready to continue'));
-                }
-              }, 800)
-            }>
-            <InputComponent />
+            validator={async () => {
+              await someAsyncFunc();
+              console.log('waiting for timeout done');
+            }}>
+            <InputComponent name="step 2" />
           </Step>
 
           <StepWithInput />
 
           <Step
-            name="3"
-            validator={resolve =>
-              setTimeout(() => {
-                resolve();
-              }, 800)
-            }>
+            name="step 4"
+            validator={() => new Promise(res => setTimeout(() => res(), 800))}>
             <p className="f3 tc">Third step</p>
           </Step>
         </div>

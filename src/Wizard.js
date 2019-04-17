@@ -39,14 +39,14 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
     const next = findNextValid(steps, index);
 
     const nextAction =
-      findNextValid(steps, index) === index
+      next === index
         ? () => onComplete(steps[index].name)
         : () => setIndex(next);
 
     if (validator) {
       try {
         setLoadingState(true);
-        await new Promise(validator);
+        await validator();
         nextAction();
       } catch (error) {
         if (error instanceof ValidationError) {
