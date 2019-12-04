@@ -1,7 +1,7 @@
 // @flow
 import { createContext, useContext } from 'react';
 
-export const ControlsContext = createContext(null);
+export const ControlsContext = createContext<Object>(null);
 
 type Props = {|
   render: (

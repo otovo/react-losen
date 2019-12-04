@@ -10,7 +10,7 @@ export class ValidationError extends Error {}
 type Props = {
   onComplete: (currentStep: string) => void,
   children: React$Node,
-  debug?: Boolean,
+  debug?: boolean,
 };
 
 const Wizard = ({ children, onComplete, debug }: Props) => {

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 type Props = {
-  name: String,
+  name: string,
 };
 
 const InputComponent = ({ name }: Props) => {

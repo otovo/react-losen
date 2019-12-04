@@ -1,7 +1,7 @@
 // @flow
 import { useEffect, createContext, useContext } from 'react';
 
-export const StepContext = createContext(null);
+export const StepContext = createContext<Object>(null);
 
 type Props = {
   children: React$Node,
