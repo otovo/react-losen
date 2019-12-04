@@ -25,29 +25,55 @@ yarn add react-losen
 ## Example
 
 ```jsx
-import { Wizard, Step, Controls } from 'react-losen';
+import { Wizard, Step, ControlsContext } from 'react-losen';
 
-<Wizard
-  render={() => (
-    <>
-      <Step name="start">Step one</Step>
-      <Step name="second-step">This is the second step</Step>
-      <Step name="final-step">Click next to finish</Step>
+const Steps = () => {
+  const { onNext, onPrevious, isFirst } = useContext(ControlsContext);
 
-      <Controls
-        render={(onNext, onPrevious, isFirstStep) => (
-          <>
-            <Button onClick={onPrevious} disabled={isFirstStep}>
-              Previous
-            </Button>
+  const WizardControls = () => {
+    return (
+      <Fragment>
+        <Button onClick={() => onPrevious()} disabled={isFirst}>
+          Previous
+        </Button>
+        <Button onClick={() => onNext()}>Next</Button>
+      </Fragment>
+    );
+  };
 
-            <Button onClick={onNext}>Next</Button>
-          </>
-        )}
-      />
-    </>
-  )}
-/>;
+  return (
+    <Fragment>
+      <Step name="start">
+        Step one
+        <WizardControls />
+      </Step>
+      <Step name="second-step">
+        This is the second step
+        <WizardControls />
+      </Step>
+      <Step name="final-step">
+        Click next to finish
+        <WizardControls />
+      </Step>
+    </Fragment>
+  );
+};
+
+const Wizard = () => {
+  return (
+    <Fragment>
+      <H1>Hello</H1>
+      <Wizard
+        onComplete={() => {
+          alert('Wizard is finished');
+        }}>
+        <Steps />
+      </Wizard>
+    </Fragment>
+  );
+};
+
+export default Wizard;
 ```
 
 ## Developing
