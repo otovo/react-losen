@@ -11,27 +11,46 @@ type Props = {
   onComplete: (currentStep: string) => void,
   children: React$Node,
   debug?: boolean,
+  updateUrl?: boolean,
 };
 
-const Wizard = ({ children, onComplete, debug }: Props) => {
+const Wizard = ({ children, onComplete, updateUrl, debug }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState([]);
   const [isLoading, setLoadingState] = useState(false);
 
+  const href = typeof window === 'undefined' ? '' : window.location.href;
+
   function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
     if (!alreadyRegistered) {
-      setSteps(prevSteps => [...prevSteps, step]);
+      setSteps(previousSteps => [...previousSteps, step]);
     }
   }
 
   function updateStep(step) {
     const stepIndex = steps.findIndex(el => el.name === step.name);
-    setSteps(prevSteps => [
-      ...prevSteps.slice(0, stepIndex),
+    setSteps(previousSteps => [
+      ...previousSteps.slice(0, stepIndex),
       step,
-      ...prevSteps.slice(stepIndex + 1),
+      ...previousSteps.slice(stepIndex + 1),
     ]);
+  }
+
+  function updateHistory(currentStepName, nextStepName) {
+    const currentUrl = window.location.href;
+    const basePath = currentUrl.includes('?')
+      ? currentUrl.split('?')[0]
+      : currentUrl;
+    const searchParams = new URLSearchParams(new URL(currentUrl).searchParams);
+    searchParams.set('step', nextStepName);
+
+    window.history.pushState({ activeStep: currentStepName }, '', currentUrl);
+    window.history.replaceState(
+      { activeStep: nextStepName },
+      '',
+      `${basePath}?${searchParams.toString()}`,
+    );
   }
 
   async function onNext() {
@@ -60,11 +79,23 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
     } else {
       nextAction();
     }
+
+    if (!updateUrl) return;
+
+    const currentStep = steps[index];
+    const nextStep = steps[index + 1];
+    updateHistory(currentStep.name, nextStep.name);
   }
 
   function onPrevious() {
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
+
+    if (!updateUrl) return;
+
+    const currentStep = steps[index];
+    const previousStep = steps[index - 1];
+    updateHistory(currentStep.name, previousStep.name);
   }
 
   useEffect(() => {
@@ -72,7 +103,14 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
     if (debug) {
       console.debug('steps updated', steps); // eslint-disable-line
     }
-  }, [steps]);
+
+    if (!updateUrl) return;
+
+    const searchParams = new URLSearchParams(new URL(href).searchParams);
+    const activeStep = searchParams.get('step');
+    const activeIndex = steps.findIndex(step => step.name === activeStep);
+    setIndex(activeIndex === -1 ? 0 : activeIndex);
+  }, [steps, href, setIndex]);
 
   return (
     <ControlsContext.Provider
@@ -82,6 +120,7 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
         isLoading,
         isFirst: findPreviousValid(steps, index) === index,
         isLast: findNextValid(steps, index) === index,
+        activeIndex: index,
       }}>
       <StepContext.Provider
         value={{
@@ -98,5 +137,6 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
 
 Wizard.defaultProps = {
   debug: false,
+  updateUrl: false,
 };
 export default Wizard;

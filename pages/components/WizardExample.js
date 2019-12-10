@@ -23,7 +23,7 @@ const WizardExample = () => {
   }
   return (
     <>
-      <Wizard onComplete={onComplete} debug>
+      <Wizard onComplete={onComplete} updateUrl debug>
         <div>
           <Step
             name="step 1"
