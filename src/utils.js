@@ -1,4 +1,4 @@
-// flow
+// @flow
 export function findNextValid(steps, currentIndex) {
   const nextValid =
     currentIndex + steps.slice(currentIndex + 1).findIndex(el => !el.autoSkip);
