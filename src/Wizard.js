@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { findNextValid, findPreviousValid } from './utils';
 import { ControlsContext } from './Controls';
 import Step, { StepContext } from './Step';
-import StateManager from './StateManager';
+import StateManager from './state-manager';
 
 export class ValidationError extends Error {}
 
@@ -22,7 +22,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
   const href = typeof window === 'undefined' ? '' : window.location.href;
 
-  const state = new StateManager(stateManager || '');
+  let _stateManager;
+  if (stateManager) {
+    _stateManager = StateManager(stateManager);
+  }
 
   function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
@@ -67,10 +70,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       nextAction();
     }
 
-    if (state.mode) {
+    if (_stateManager) {
       const currentStep = steps[index];
       const nextStep = steps[index + 1];
-      state.updateHistory(currentStep.name, nextStep.name);
+      _stateManager.updateHistory(currentStep.name, nextStep.name);
     }
   }
 
@@ -78,10 +81,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
 
-    if (state.mode) {
+    if (_stateManager) {
       const currentStep = steps[index];
       const previousStep = steps[index - 1];
-      state.updateHistory(currentStep.name, previousStep.name);
+      _stateManager.updateHistory(currentStep.name, previousStep.name);
     }
   }
 
@@ -91,8 +94,8 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       console.debug('steps updated', steps); // eslint-disable-line
     }
 
-    if (state.mode) {
-      const activeStep = state.getActiveStep();
+    if (_stateManager) {
+      const activeStep = _stateManager.getActiveStep();
       const activeIndex = steps.findIndex(step => step.name === activeStep);
       setIndex(activeIndex > -1 ? activeIndex : 0);
     }
@@ -123,6 +126,6 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
 Wizard.defaultProps = {
   debug: false,
-  stateManager: false,
+  stateManager: undefined,
 };
 export default Wizard;
