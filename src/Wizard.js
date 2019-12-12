@@ -42,7 +42,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   }
 
   async function onNext() {
-    const { validator } = steps[index]; // TODO
+    const { validator } = steps[index];
     const next = findNextValid(steps, index);
 
     const nextAction =
