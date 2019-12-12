@@ -1,14 +1,14 @@
 // @flow
-import Step from './Step';
+import { type StepInfo } from './Step';
 
-export function findNextValid(steps: Array<typeof Step>, currentIndex: number) {
+export function findNextValid(steps: Array<StepInfo>, currentIndex: number) {
   const nextValid =
     currentIndex + steps.slice(currentIndex + 1).findIndex(el => !el.autoSkip); // TODO
   return steps.length > nextValid ? nextValid + 1 : nextValid;
 }
 
 export function findPreviousValid(
-  steps: Array<typeof Step>,
+  steps: Array<StepInfo>,
   currentIndex: number,
 ) {
   const previousValid = [...steps]

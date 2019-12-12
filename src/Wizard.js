@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import { findNextValid, findPreviousValid } from './utils';
 import { ControlsContext } from './Controls';
-import Step, { StepContext } from './Step';
+import { StepContext, type StepInfo } from './Step';
 import StateManager from './state-manager';
 
 export class ValidationError extends Error {}
@@ -17,7 +17,7 @@ type Props = {|
 
 const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   const [index, setIndex] = useState(0);
-  const [steps, setSteps] = useState<Array<typeof Step>>([]);
+  const [steps, setSteps] = useState<Array<StepInfo>>([]);
   const [isLoading, setLoadingState] = useState(false);
 
   let _stateManager;

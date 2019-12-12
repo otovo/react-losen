@@ -7,6 +7,12 @@ type Props = {
   children: React$Node,
 } & Losen$Step;
 
+export type StepInfo = {
+  name: string,
+  validator?: () => Promise,
+  autoSkip?: Boolean,
+};
+
 const Step = ({ children, name, validator, autoSkip }: Props) => {
   const { registerStep, activeStep, updateStep, initialized } = useContext(
     StepContext,
