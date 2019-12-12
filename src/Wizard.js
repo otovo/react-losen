@@ -20,8 +20,6 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   const [steps, setSteps] = useState<Array<typeof Step>>([]);
   const [isLoading, setLoadingState] = useState(false);
 
-  const href = typeof window === 'undefined' ? '' : window.location.href;
-
   let _stateManager;
   if (stateManager) {
     _stateManager = StateManager(stateManager);
@@ -99,7 +97,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       const activeIndex = steps.findIndex(step => step.name === activeStep);
       setIndex(activeIndex > -1 ? activeIndex : 0);
     }
-  }, [steps, href, setIndex]);
+  }, [steps, index, setIndex]);
 
   return (
     <ControlsContext.Provider
