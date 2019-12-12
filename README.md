@@ -56,7 +56,9 @@ import { Wizard, Step, Controls } from 'react-losen';
 
 `react-losen` is built with React and it's [Context API](https://reactjs.org/docs/context.html) under the hood. We use [render props](https://reactjs.org/docs/render-props.html) to expose functionality to child components.
 
-We use [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) for state management via url. Include `url-search-params-polyfill` in your apps dependencies to support IE.
+Include the following polyfills to support older browsers:
+- `array-findindex-polyfill`
+- `url-search-params-polyfill`
 
 ### Developing
 
