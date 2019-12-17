@@ -97,7 +97,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       const activeIndex = steps.findIndex(step => step.name === activeStep);
       setIndex(activeIndex > -1 ? activeIndex : 0);
     }
-  }, [steps, index, setIndex]);
+  }, [steps, debug, _stateManager]);
 
   return (
     <ControlsContext.Provider

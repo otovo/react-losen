@@ -10,6 +10,7 @@
   "rules": {
     "react/default-props-match-prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "flowtype/define-flow-type": 2
   }
 }
