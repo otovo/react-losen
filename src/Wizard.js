@@ -95,7 +95,9 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     if (_stateManager) {
       const activeStep = _stateManager.getActiveStep();
       const activeIndex = steps.findIndex(step => step.name === activeStep);
-      setIndex(activeIndex > -1 ? activeIndex : 0);
+      if (activeIndex > -1) {
+        setIndex(activeIndex);
+      }
     }
   }, [steps, debug, _stateManager]);
 
