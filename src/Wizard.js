@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { findNextValid, findPreviousValid } from './utils';
 import { ControlsContext } from './Controls';
 import { StepContext } from './Step';
-import StateManager from './state-manager';
 
 export class ValidationError extends Error {}
 
@@ -12,18 +11,13 @@ type Props = {|
   onComplete: (currentStep: string) => void,
   children: React$Node,
   debug?: boolean,
-  stateManager?: string,
+  stateManager?: Losen$StateManager,
 |};
 
 const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState<Array<Losen$Step>>([]);
   const [isLoading, setLoadingState] = useState(false);
-
-  let _stateManager;
-  if (stateManager) {
-    _stateManager = StateManager(stateManager);
-  }
 
   function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
@@ -68,10 +62,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       nextAction();
     }
 
-    if (_stateManager) {
+    if (stateManager) {
       const currentStep = steps[index];
       const nextStep = steps[index + 1];
-      _stateManager.updateHistory(currentStep.name, nextStep.name);
+      stateManager.updateStep(currentStep.name, nextStep.name);
     }
   }
 
@@ -79,10 +73,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
 
-    if (_stateManager) {
+    if (stateManager) {
       const currentStep = steps[index];
       const previousStep = steps[index - 1];
-      _stateManager.updateHistory(currentStep.name, previousStep.name);
+      stateManager.updateStep(currentStep.name, previousStep.name);
     }
   }
 
@@ -92,14 +86,14 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       console.debug('steps updated', steps); // eslint-disable-line
     }
 
-    if (_stateManager) {
-      const activeStep = _stateManager.getActiveStep();
+    if (stateManager) {
+      const activeStep = stateManager.getActiveStep();
       const activeIndex = steps.findIndex(step => step.name === activeStep);
       if (activeIndex > -1) {
         setIndex(activeIndex);
       }
     }
-  }, [steps, debug, _stateManager]);
+  }, [steps, debug, stateManager]);
 
   return (
     <ControlsContext.Provider

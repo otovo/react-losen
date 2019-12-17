@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import Wizard from './Wizard';
 import Step from './Step';
 import { ControlsContext } from './Controls';
+import { UrlStateManager } from './state-managers/url-state-manager';
 
 const ControlsComponent = () => {
   const { onNext, onPrevious } = useContext(ControlsContext);
@@ -60,7 +61,7 @@ describe('Wizard', () => {
 
 describe('Wizard caches step state in url', () => {
   window.history.pushState({}, '', '?step=two');
-  const component = mount(<WizardComponent stateManager="url" />);
+  const component = mount(<WizardComponent stateManager={UrlStateManager} />);
 
   test('renders correct step upon load', () => {
     expect(component.find('#active-step').text()).toBe('Step two');

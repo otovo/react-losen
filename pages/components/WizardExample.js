@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 
 import { Wizard, ValidationError, Step } from '../../src';
+import { UrlStateManager } from '../../src/state-managers/url-state-manager';
 import Controls from './Controls';
 import InputComponent from './InputComponent';
 import StepWithInput from './StepWithInput';
@@ -23,7 +24,7 @@ const WizardExample = () => {
   }
   return (
     <>
-      <Wizard onComplete={onComplete} stateManager="url" debug>
+      <Wizard onComplete={onComplete} stateManager={UrlStateManager} debug>
         <div>
           <Step
             name="step 1"
