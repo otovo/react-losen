@@ -1,3 +1,5 @@
+// @flow
+
 export const UrlStateManager: Losen$StateManager = {
   updateStep: (currentStepName, nextStepName) => {
     const currentUrl = window.location.href;
