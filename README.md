@@ -56,6 +56,10 @@ import { Wizard, Step, Controls } from 'react-losen';
 
 `react-losen` is built with React and it's [Context API](https://reactjs.org/docs/context.html) under the hood. We use [render props](https://reactjs.org/docs/render-props.html) to expose functionality to child components.
 
+Include the following polyfills to support older browsers:
+- `array-findindex-polyfill`
+- `url-search-params-polyfill`
+
 ### Developing
 
 Use `yarn dev` to spin up a dev server which let's you view and play with the source components. To get started, create a `.md` in the `./pages` directory. It uses MDX which let's you import and write

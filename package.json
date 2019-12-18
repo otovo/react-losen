@@ -17,7 +17,7 @@
     "docs:build": "cp README.md ./pages/_index.mdx && docz build",
     "eslint": "eslint . --cache",
     "dev": "docz dev",
-    "test": "jest",
+    "test": "jest --setupTestFrameworkScriptFile=./setupJest.js",
     "tdd": "jest --watch",
     "build": "pack build",
     "publish": "pack publish"
@@ -66,6 +66,8 @@
     "docz": "^0.13.7",
     "docz-plugin-css": "^0.11.0",
     "docz-theme-default": "^0.13.7",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -76,11 +78,12 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "^1.2.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "flow-bin": "^0.96.0",
     "jest": "^24.1.0",
     "pika-plugin-minify": "^0.1.0",
     "prettier": "^1.16.4",
+    "react-dom": "16",
     "tachyons": "^4.11.1"
   },
   "peerDependencies": {

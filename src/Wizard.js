@@ -7,30 +7,31 @@ import { StepContext } from './Step';
 
 export class ValidationError extends Error {}
 
-type Props = {
+type Props = {|
   onComplete: (currentStep: string) => void,
   children: React$Node,
-  debug?: Boolean,
-};
+  debug?: boolean,
+  stateManager?: Losen$StateManager,
+|};
 
-const Wizard = ({ children, onComplete, debug }: Props) => {
+const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   const [index, setIndex] = useState(0);
-  const [steps, setSteps] = useState([]);
+  const [steps, setSteps] = useState<Array<Losen$Step>>([]);
   const [isLoading, setLoadingState] = useState(false);
 
   function registerStep(step) {
     const alreadyRegistered = steps.map(el => el.name).includes(step.name);
     if (!alreadyRegistered) {
-      setSteps(prevSteps => [...prevSteps, step]);
+      setSteps(previousSteps => [...previousSteps, step]);
     }
   }
 
   function updateStep(step) {
     const stepIndex = steps.findIndex(el => el.name === step.name);
-    setSteps(prevSteps => [
-      ...prevSteps.slice(0, stepIndex),
+    setSteps(previousSteps => [
+      ...previousSteps.slice(0, stepIndex),
       step,
-      ...prevSteps.slice(stepIndex + 1),
+      ...previousSteps.slice(stepIndex + 1),
     ]);
   }
 
@@ -60,11 +61,23 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
     } else {
       nextAction();
     }
+
+    if (stateManager) {
+      const currentStep = steps[index];
+      const nextStep = steps[index + 1];
+      stateManager.updateStep(currentStep.name, nextStep.name);
+    }
   }
 
   function onPrevious() {
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
+
+    if (stateManager) {
+      const currentStep = steps[index];
+      const previousStep = steps[index - 1];
+      stateManager.updateStep(currentStep.name, previousStep.name);
+    }
   }
 
   useEffect(() => {
@@ -72,7 +85,15 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
     if (debug) {
       console.debug('steps updated', steps); // eslint-disable-line
     }
-  }, [steps]);
+
+    if (stateManager) {
+      const activeStep = stateManager.getActiveStep();
+      const activeIndex = steps.findIndex(step => step.name === activeStep);
+      if (activeIndex > -1) {
+        setIndex(activeIndex);
+      }
+    }
+  }, [steps, debug, stateManager]);
 
   return (
     <ControlsContext.Provider
@@ -82,6 +103,7 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
         isLoading,
         isFirst: findPreviousValid(steps, index) === index,
         isLast: findNextValid(steps, index) === index,
+        activeIndex: index,
       }}>
       <StepContext.Provider
         value={{
@@ -98,5 +120,6 @@ const Wizard = ({ children, onComplete, debug }: Props) => {
 
 Wizard.defaultProps = {
   debug: false,
+  stateManager: undefined,
 };
 export default Wizard;

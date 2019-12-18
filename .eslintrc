@@ -4,11 +4,13 @@
     "es6": true,
     "jest": true
   },
-  "plugins": ["react-hooks"],
+  "plugins": ["react-hooks", "flowtype"],
   "parser": "babel-eslint",
   "extends": "otovo/react-recommended",
   "rules": {
     "react/default-props-match-prop-types": 0,
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "flowtype/define-flow-type": 2
   }
 }

@@ -2,3 +2,4 @@
 /pkg/
 /docs/
 /node_modules/
+setupJest.js
