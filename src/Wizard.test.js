@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import Wizard from './Wizard';
 import Step from './Step';
@@ -61,10 +60,6 @@ describe('Wizard', () => {
 });
 
 describe('Wizard caches step state in url', () => {
-  const map = {};
-  window.addEventListener = jest.fn((event, cb) => {
-    map[event] = cb;
-  });
   let component;
 
   beforeEach(() => {
