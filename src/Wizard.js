@@ -125,6 +125,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
           activeStep: steps[index] || {},
           initialized: !!steps[index],
           updateStep,
+          stateManager,
         }}>
         {children}
       </StepContext.Provider>
