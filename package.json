@@ -18,7 +18,7 @@
     "eslint": "eslint . --cache",
     "dev": "docz dev",
     "test": "jest --setupTestFrameworkScriptFile=./setupJest.js",
-    "tdd": "jest --watch",
+    "tdd": "jest --setupTestFrameworkScriptFile=./setupJest.js --watch",
     "build": "pack build",
     "publish": "pack publish"
   },

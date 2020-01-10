@@ -60,18 +60,29 @@ describe('Wizard', () => {
 });
 
 describe('Wizard caches step state in url', () => {
-  window.history.pushState({}, '', '?step=two');
-  const component = mount(<WizardComponent stateManager={UrlStateManager} />);
+  let component;
+
+  beforeEach(() => {
+    window.history.pushState({ activeStep: 'one' }, '', '?step=one');
+    component = mount(<WizardComponent stateManager={UrlStateManager} />);
+  });
 
   test('renders correct step upon load', () => {
-    expect(component.find('#active-step').text()).toBe('Step two');
+    expect(component.find('#active-step').text()).toBe('Step one');
+  });
+
+  test('renders previous step on back button', () => {
+    window.history.pushState({ activeStep: 'two' }, '', '?step=two');
+    window.history.back();
+    expect(component.find('#active-step').text()).toBe('Step one');
   });
 
   test('url changes upon click of next button', () => {
     component.find('#next-button').simulate('click');
+    expect(component.find('#active-step').text()).toBe('Step two');
     const searchParams = new URLSearchParams(
       new URL(window.location.href).searchParams,
     );
-    expect(searchParams.get('step')).toBe('three');
+    expect(searchParams.get('step')).toBe('two');
   });
 });

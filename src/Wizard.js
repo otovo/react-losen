@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { findNextValid, findPreviousValid } from './utils';
 import { ControlsContext } from './Controls';
@@ -80,20 +80,27 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     }
   }
 
+  const onLoad = useCallback(() => {
+    if (stateManager) {
+      const activeStep = stateManager.getActiveStep();
+      let activeIndex = steps.findIndex(step => step.name === activeStep);
+      activeIndex = activeIndex > -1 ? activeIndex : 0;
+      setIndex(activeIndex);
+    }
+  }, [stateManager, steps]);
+
   useEffect(() => {
     // for debugging purposes only
     if (debug) {
       console.debug('steps updated', steps); // eslint-disable-line
     }
 
-    if (stateManager) {
-      const activeStep = stateManager.getActiveStep();
-      const activeIndex = steps.findIndex(step => step.name === activeStep);
-      if (activeIndex > -1) {
-        setIndex(activeIndex);
-      }
-    }
-  }, [steps, debug, stateManager]);
+    window.addEventListener('popstate', () => {
+      onLoad();
+    });
+
+    onLoad();
+  }, [steps, debug, stateManager, onLoad]);
 
   return (
     <ControlsContext.Provider
