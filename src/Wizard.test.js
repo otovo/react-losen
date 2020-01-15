@@ -80,9 +80,7 @@ describe('Wizard caches step state in url', () => {
   test('url changes upon click of next button', () => {
     component.find('#next-button').simulate('click');
     expect(component.find('#active-step').text()).toBe('Step two');
-    const searchParams = new URLSearchParams(
-      new URL(window.location.href).searchParams,
-    );
+    const { searchParams } = new URL(window.location.href);
     expect(searchParams.get('step')).toBe('two');
   });
 });

@@ -1,16 +1,14 @@
 // @flow
 
 function setSearchParam(key: string, value: string) {
-  const searchParams = new URLSearchParams(
-    new URL(window.location.href).searchParams,
-  );
+  const { searchParams } = new URL(window.location.href);
   searchParams.set(key, value);
   return searchParams.toString() || '';
 }
 
 function getSearchParam(key: string) {
   const { href } = window.location;
-  const searchParams = new URLSearchParams(new URL(href).searchParams);
+  const { searchParams } = new URL(href);
   return searchParams.get(key) || '';
 }
 
