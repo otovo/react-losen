@@ -17,25 +17,26 @@ const Step = ({ children, name, validator, autoSkip, state }: Props) => {
     stateManager,
   } = useContext(StepContext);
 
-  const stepInfo = {
-    name,
-    validator,
-    autoSkip,
-  };
-
   useEffect(() => {
     if (!initialized) {
-      registerStep(stepInfo);
+      registerStep({
+        name,
+        validator,
+        autoSkip,
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name]);
+  }, [name, validator, autoSkip, initialized, registerStep]);
 
   useEffect(() => {
     if (initialized) {
-      updateStep(stepInfo);
+      updateStep({
+        name,
+        validator,
+        autoSkip,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoSkip, validator]);
+  }, [autoSkip, validator, initialized]);
 
   useEffect(() => {
     if (state && stateManager) {
