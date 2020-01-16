@@ -1,8 +1,13 @@
 // @flow
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+
+import useThunkReducer from 'react-hook-thunk-reducer';
 
 import { findNextValid, findPreviousValid } from './utils';
 import { StateContext, ActionContext } from './contexts';
+import { reducer, initialState } from './state';
+import { loggingDecorator } from './devtools';
+import { registerStep, updateStep, onPrevious, onNext } from './actions';
 
 export class ValidationError extends Error {}
 
@@ -14,133 +19,71 @@ type Props = {|
 |};
 
 const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
-  const [index, setIndex] = useState<number | null>(null);
-  const [steps, setSteps] = useState<Array<Losen$Step>>([]);
-  const [isLoading, setLoadingState] = useState(false);
+  const [state, dispatch] = useThunkReducer(
+    debug ? loggingDecorator(reducer) : reducer,
+    initialState,
+  );
 
-  function registerStep(step) {
-    const alreadyRegistered = steps.map(el => el.name).includes(step.name);
-    if (!alreadyRegistered) {
-      setSteps(previousSteps => [...previousSteps, step]);
-    }
-  }
+  // const onLoad = useCallback(() => {
+  //   if (stateManager) {
+  //     const activeStep = stateManager.getActiveStep();
+  //     let activeIndex = steps.findIndex(step => step.name === activeStep);
+  //     activeIndex = activeIndex > -1 ? activeIndex : 0;
+  //     setIndex(activeIndex);
+  //   } else {
+  //     setIndex(1);
+  //   }
+  // }, [stateManager, steps]);
 
-  function updateStep(step) {
-    const stepIndex = steps.findIndex(el => el.name === step.name);
-    setSteps(previousSteps => [
-      ...previousSteps.slice(0, stepIndex),
-      step,
-      ...previousSteps.slice(stepIndex + 1),
-    ]);
-  }
+  // useEffect(() => {
+  //   // for debugging purposes only
+  //   if (debug) {
+  //     console.debug('steps updated', steps); // eslint-disable-line
+  //   }
 
-  async function onNext() {
-    if (index === null) {
-      return;
-    }
-    const { validator } = steps[index];
-    const next = findNextValid(steps, index);
+  //   // window.addEventListener('popstate', () => {
+  //   //   onLoad();
+  //   // });
 
-    const nextAction =
-      next === index
-        ? () => onComplete(steps[index].name)
-        : () => setIndex(next);
-
-    if (validator) {
-      try {
-        setLoadingState(true);
-        await validator();
-        nextAction();
-      } catch (error) {
-        if (error instanceof ValidationError) {
-          console.error('ReactLosen', error); // eslint-disable-line
-        } else {
-          throw error;
-        }
-      } finally {
-        setLoadingState(false);
-      }
-    } else {
-      nextAction();
-    }
-
-    if (stateManager) {
-      const currentStep = steps[index];
-      if (index !== steps.length - 1) {
-        const nextStep = steps[index + 1];
-        stateManager.updateStep(currentStep.name, nextStep.name);
-      }
-    }
-  }
-
-  function onPrevious() {
-    if (index === null) {
-      return;
-    }
-    const prev = findPreviousValid(steps, index);
-    setIndex(prev);
-
-    if (stateManager) {
-      const currentStep = steps[index];
-      if (index > 0) {
-        const previousStep = steps[index - 1];
-        stateManager.updateStep(currentStep.name, previousStep.name);
-      }
-    }
-  }
-
-  const onLoad = useCallback(() => {
-    if (stateManager) {
-      const activeStep = stateManager.getActiveStep();
-      let activeIndex = steps.findIndex(step => step.name === activeStep);
-      activeIndex = activeIndex > -1 ? activeIndex : null;
-      setIndex(activeIndex);
-    } else if (index === null) {
-      setIndex(0);
-    }
-  }, [index, stateManager, steps]);
-
-  useEffect(() => {
-    // for debugging purposes only
-    if (debug) {
-      console.debug('steps updated', steps); // eslint-disable-line
-    }
-
-    window.addEventListener('popstate', () => {
-      onLoad();
-    });
-
-    onLoad();
-  }, [steps, debug, stateManager, onLoad]);
+  //   // onLoad();
+  // }, [steps, debug, stateManager, onLoad]);
 
   const actions = useMemo(
     () => ({
-      isLoading,
-      onNext,
-      onPrevious,
-      registerStep,
-      updateStep,
+      registerStep: step => dispatch(registerStep(step)),
+      updateStep: step => dispatch(updateStep(step)),
+      onPrevious: () => dispatch(onPrevious()),
+      onNext: () => dispatch(onNext(onComplete)),
     }),
-    [index, isLoading, steps],
+    [onComplete],
   );
 
-  const state = useMemo(
+  // Store state + derived state
+  const mergedState = useMemo(
     () => ({
-      isLoading,
-      activeIndex: index,
-      activeStep: index === null ? { name: '' } : steps[index],
-      initialized: index === null ? false : !!steps[index],
+      ...state,
+      activeIndex: state.index,
+      activeStep:
+        state.index === null ? { name: '' } : state.steps[state.index],
+      initialized: state.index === null ? false : !!state.steps[state.index],
       isFirst:
-        index !== null ? findPreviousValid(steps, index) === index : false,
-      isLast: index !== null ? findNextValid(steps, index) === index : false,
+        state.index !== null
+          ? findPreviousValid(state.steps, state.index) === state.index
+          : false,
+      isLast:
+        state.index !== null
+          ? findNextValid(state.steps, state.index) === state.index
+          : false,
       stateManager,
     }),
-    [index, isLoading, steps],
+    [state],
   );
 
   return (
     <ActionContext.Provider value={actions}>
-      <StateContext.Provider value={state}>{children}</StateContext.Provider>
+      <StateContext.Provider value={mergedState}>
+        {children}
+      </StateContext.Provider>
     </ActionContext.Provider>
   );
 };
