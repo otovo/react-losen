@@ -15,7 +15,7 @@ type Props = {|
 |};
 
 const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState<number | null>(null);
   const [steps, setSteps] = useState<Array<Losen$Step>>([]);
   const [isLoading, setLoadingState] = useState(false);
 
@@ -36,6 +36,9 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   }
 
   async function onNext() {
+    if (index === null) {
+      return;
+    }
     const { validator } = steps[index];
     const next = findNextValid(steps, index);
 
@@ -72,7 +75,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
   }
 
   function onPrevious() {
-    if (index === 0) {
+    if (index === null) {
       return;
     }
     const prev = findPreviousValid(steps, index);
@@ -91,10 +94,12 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     if (stateManager) {
       const activeStep = stateManager.getActiveStep();
       let activeIndex = steps.findIndex(step => step.name === activeStep);
-      activeIndex = activeIndex > -1 ? activeIndex : 0;
+      activeIndex = activeIndex > -1 ? activeIndex : null;
       setIndex(activeIndex);
+    } else if (index === null) {
+      setIndex(0);
     }
-  }, [stateManager, steps]);
+  }, [index, stateManager, steps]);
 
   useEffect(() => {
     // for debugging purposes only
@@ -115,15 +120,16 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
         onNext,
         onPrevious,
         isLoading,
-        isFirst: findPreviousValid(steps, index) === index,
-        isLast: findNextValid(steps, index) === index,
+        isFirst:
+          index !== null ? findPreviousValid(steps, index) === index : false,
+        isLast: index !== null ? findNextValid(steps, index) === index : false,
         activeIndex: index,
       }}>
       <StepContext.Provider
         value={{
           registerStep,
-          activeStep: steps[index] || {},
-          initialized: !!steps[index],
+          activeStep: index === null ? { name: '' } : steps[index],
+          initialized: index === null ? false : !!steps[index],
           updateStep,
           stateManager,
         }}>
