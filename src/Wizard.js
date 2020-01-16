@@ -115,6 +115,7 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
   const actions = useMemo(
     () => ({
+      isLoading,
       onNext,
       onPrevious,
       registerStep,
