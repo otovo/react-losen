@@ -36,13 +36,13 @@ const Step = ({ children, name, validator, autoSkip, state }: Props) => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoSkip, validator, initialized]);
+  }, [name, autoSkip, validator, initialized]); // adding all deps causes infinite reloads - to be fixed later!
 
   useEffect(() => {
     if (state && stateManager) {
       state.forEach(item => {
-        const key = Object.keys(item)[0];
-        stateManager.setItem(key, item[key]);
+        const [key, value] = Object.entries(item)[0];
+        stateManager.setItem(key, value);
       });
     }
   }, [state, stateManager]);
@@ -57,7 +57,7 @@ const Step = ({ children, name, validator, autoSkip, state }: Props) => {
 Step.defaultProps = {
   validator: null,
   autoSkip: false,
-  state: undefined,
+  state: null,
 };
 
 export default Step;
