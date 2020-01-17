@@ -64,19 +64,26 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
     if (stateManager) {
       const currentStep = steps[index];
-      const nextStep = steps[index + 1];
-      stateManager.updateStep(currentStep.name, nextStep.name);
+      if (index !== steps.length - 1) {
+        const nextStep = steps[index + 1];
+        stateManager.updateStep(currentStep.name, nextStep.name);
+      }
     }
   }
 
   function onPrevious() {
+    if (index === 0) {
+      return;
+    }
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
 
     if (stateManager) {
       const currentStep = steps[index];
-      const previousStep = steps[index - 1];
-      stateManager.updateStep(currentStep.name, previousStep.name);
+      if (index > 0) {
+        const previousStep = steps[index - 1];
+        stateManager.updateStep(currentStep.name, previousStep.name);
+      }
     }
   }
 
