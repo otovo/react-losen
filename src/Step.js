@@ -3,32 +3,49 @@ import { useEffect, createContext, useContext } from 'react';
 
 export const StepContext = createContext<Object>(null);
 
-type Props = {
+type Props = {|
   children: React$Node,
-} & Losen$Step;
+  ...Losen$Step,
+|};
 
-const Step = ({ children, name, validator, autoSkip }: Props) => {
-  const { registerStep, activeStep, updateStep, initialized } = useContext(
-    StepContext,
-  );
-
-  const stepInfo = {
-    name,
-    validator,
-    autoSkip,
-  };
+const Step = ({ children, name, validator, autoSkip, state }: Props) => {
+  const {
+    registerStep,
+    activeStep,
+    updateStep,
+    initialized,
+    stateManager,
+  } = useContext(StepContext);
 
   useEffect(() => {
     if (!initialized) {
-      registerStep(stepInfo);
+      registerStep({
+        name,
+        validator,
+        autoSkip,
+      });
     }
-  }, [name]);
+  }, [name, validator, autoSkip, initialized, registerStep]);
 
   useEffect(() => {
     if (initialized) {
-      updateStep(stepInfo);
+      updateStep({
+        name,
+        validator,
+        autoSkip,
+      });
     }
-  }, [autoSkip, validator]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, autoSkip, validator, initialized]); // adding all deps causes infinite reloads - to be fixed later!
+
+  useEffect(() => {
+    if (state && stateManager) {
+      state.forEach(item => {
+        const [key, value] = Object.entries(item)[0];
+        stateManager.setItem(key, value);
+      });
+    }
+  }, [state, stateManager]);
 
   if (activeStep.name !== name) {
     return null;
@@ -40,6 +57,7 @@ const Step = ({ children, name, validator, autoSkip }: Props) => {
 Step.defaultProps = {
   validator: null,
   autoSkip: false,
+  state: null,
 };
 
 export default Step;

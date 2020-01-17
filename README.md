@@ -59,6 +59,7 @@ import { Wizard, Step, Controls } from 'react-losen';
 Include the following polyfills to support older browsers:
 - `array-findindex-polyfill`
 - `url-search-params-polyfill`
+- `Object.entries` polyfill
 
 ### Developing
 

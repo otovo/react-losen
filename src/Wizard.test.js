@@ -63,26 +63,24 @@ describe('Wizard caches step state in url', () => {
   let component;
 
   beforeEach(() => {
-    window.history.pushState({ activeStep: 'one' }, '', '?step=one');
+    window.history.pushState({ activeStep: 'two' }, '', '?step=two');
     component = mount(<WizardComponent stateManager={UrlStateManager} />);
   });
 
   test('renders correct step upon load', () => {
-    expect(component.find('#active-step').text()).toBe('Step one');
+    expect(component.find('#active-step').text()).toBe('Step two');
   });
 
   test('renders previous step on back button', () => {
-    window.history.pushState({ activeStep: 'two' }, '', '?step=two');
+    window.history.pushState({ activeStep: 'three' }, '', '?step=three');
     window.history.back();
-    expect(component.find('#active-step').text()).toBe('Step one');
+    expect(component.find('#active-step').text()).toBe('Step two');
   });
 
   test('url changes upon click of next button', () => {
     component.find('#next-button').simulate('click');
-    expect(component.find('#active-step').text()).toBe('Step two');
-    const searchParams = new URLSearchParams(
-      new URL(window.location.href).searchParams,
-    );
-    expect(searchParams.get('step')).toBe('two');
+    expect(component.find('#active-step').text()).toBe('Step three');
+    const { searchParams } = new URL(window.location.href);
+    expect(searchParams.get('step')).toBe('three');
   });
 });
