@@ -1,26 +1,26 @@
 // @flow
 import { findNextValid } from './utils';
 
+export const NEXT_STEP: 'NEXT_STEP' = 'NEXT_STEP';
+export const PREVIOUS_STEP: 'PREVIOUS_STEP' = 'PREVIOUS_STEP';
 export const REGISTER_STEP: 'REGISTER_STEP' = 'REGISTER_STEP';
+export const UPDATE_STEP: 'UPDATE_STEP' = 'UPDATE_STEP';
+export const VALIDATE_FAILED: 'VALIDATE_FAILED' = 'VALIDATE_FAILED';
+export const VALIDATE_SUCCESS: 'VALIDATE_SUCCESS' = 'VALIDATE_SUCCESS';
 export const VALIDATING_STEP: 'VALIDATING_STEP' = 'VALIDATING_STEP';
 export const VALIDATION_COMPLETE: 'VALIDATION_COMPLETE' = 'VALIDATION_COMPLETE';
-export const UPDATE_STEP: 'UPDATE_STEP' = 'UPDATE_STEP';
-export const NEXT_STEP: 'NEXT_STEP' = 'NEXT_STEP';
-export const VALIDATE_SUCCESS: 'VALIDATE_SUCCESS' = 'VALIDATE_SUCCESS';
-export const VALIDATE_FAILED: 'VALIDATE_FAILED' = 'VALIDATE_FAILED';
-export const PREVIOUS_STEP: 'PREVIOUS_STEP' = 'PREVIOUS_STEP';
 export const WIZARD_COMPLETED: 'WIZARD_COMPLETED' = 'WIZARD_COMPLETED';
 
 export type Action =
+  | { type: typeof NEXT_STEP, nextIndex: number }
+  | { type: typeof PREVIOUS_STEP }
   | { type: typeof REGISTER_STEP, step: Losen$Step }
+  | { type: typeof UPDATE_STEP, step: Losen$Step }
+  | { type: typeof VALIDATE_FAILED }
+  | { type: typeof VALIDATE_SUCCESS, nextIndex: number }
   | { type: typeof VALIDATING_STEP }
   | { type: typeof VALIDATION_COMPLETE }
-  | { type: typeof UPDATE_STEP, step: Losen$Step }
-  | { type: typeof NEXT_STEP, nextIndex: number }
-  | { type: typeof VALIDATE_SUCCESS, nextIndex: number }
-  | { type: typeof VALIDATE_FAILED }
-  | { type: typeof WIZARD_COMPLETED }
-  | { type: typeof PREVIOUS_STEP };
+  | { type: typeof WIZARD_COMPLETED };
 
 type GetState = () => Losen$State;
 type Dispatch = (action: Action | ThunkAction | PromiseAction) => any; // eslint-disable-line

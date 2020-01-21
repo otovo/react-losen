@@ -2,14 +2,15 @@
 import { findPreviousValid } from './utils';
 
 import {
+  NEXT_STEP,
+  PREVIOUS_STEP,
   REGISTER_STEP,
+  UPDATE_STEP,
+  VALIDATE_FAILED,
+  VALIDATE_SUCCESS,
   VALIDATING_STEP,
   VALIDATION_COMPLETE,
-  UPDATE_STEP,
-  NEXT_STEP,
-  VALIDATE_SUCCESS,
-  VALIDATE_FAILED,
-  PREVIOUS_STEP,
+  WIZARD_COMPLETED,
   type Action,
 } from './actions';
 
@@ -69,6 +70,10 @@ export function reducer(state: Losen$State, action: Action) {
     }
 
     case VALIDATE_FAILED: {
+      return { ...state, isLoading: false };
+    }
+
+    case WIZARD_COMPLETED: {
       return { ...state, isLoading: false };
     }
 
