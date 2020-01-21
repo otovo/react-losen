@@ -63,17 +63,10 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
     () => ({
       ...state,
       activeIndex: state.index,
-      activeStep:
-        state.index === null ? { name: '' } : state.steps[state.index],
-      initialized: state.index === null ? false : !!state.steps[state.index],
-      isFirst:
-        state.index !== null
-          ? findPreviousValid(state.steps, state.index) === state.index
-          : false,
-      isLast:
-        state.index !== null
-          ? findNextValid(state.steps, state.index) === state.index
-          : false,
+      activeStep: state.steps[state.index] || {},
+      initialized: !!state.steps[state.index],
+      isFirst: findPreviousValid(state.steps, state.index) === state.index,
+      isLast: findNextValid(state.steps, state.index) === state.index,
       stateManager,
     }),
     [state],
