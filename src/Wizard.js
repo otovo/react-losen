@@ -1,5 +1,5 @@
 // @flow
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import useThunkReducer from 'react-hook-thunk-reducer';
 
@@ -15,38 +15,13 @@ type Props = {|
   onComplete: (currentStep: string) => void,
   children: React$Node,
   debug?: boolean,
-  stateManager?: Losen$StateManager,
 |};
 
-const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
+const Wizard = ({ children, onComplete, debug }: Props) => {
   const [state, dispatch] = useThunkReducer(
     debug ? loggingDecorator(reducer) : reducer,
     initialState,
   );
-
-  // const onLoad = useCallback(() => {
-  //   if (stateManager) {
-  //     const activeStep = stateManager.getActiveStep();
-  //     let activeIndex = steps.findIndex(step => step.name === activeStep);
-  //     activeIndex = activeIndex > -1 ? activeIndex : 0;
-  //     setIndex(activeIndex);
-  //   } else {
-  //     setIndex(1);
-  //   }
-  // }, [stateManager, steps]);
-
-  // useEffect(() => {
-  //   // for debugging purposes only
-  //   if (debug) {
-  //     console.debug('steps updated', steps); // eslint-disable-line
-  //   }
-
-  //   // window.addEventListener('popstate', () => {
-  //   //   onLoad();
-  //   // });
-
-  //   // onLoad();
-  // }, [steps, debug, stateManager, onLoad]);
 
   const actions = useMemo(
     () => ({
@@ -67,7 +42,6 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
       initialized: !!state.steps[state.index],
       isFirst: findPreviousValid(state.steps, state.index) === state.index,
       isLast: findNextValid(state.steps, state.index) === state.index,
-      stateManager,
     }),
     [state],
   );
@@ -83,6 +57,5 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
 Wizard.defaultProps = {
   debug: false,
-  stateManager: undefined,
 };
 export default Wizard;

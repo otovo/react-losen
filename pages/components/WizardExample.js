@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import { Wizard, Step } from '../../src';
-import { UrlStateManager } from '../../src/state-managers/url-state-manager';
+// import { UrlStateManager } from '../../src/state-managers/url-state-manager';
 import Controls from './Controls';
 import StepWithInput from './StepWithInput';
 import StepOne from './StepOne';
@@ -17,7 +17,10 @@ const WizardExample = () => {
   }
   return (
     <>
-      <Wizard onComplete={onComplete} stateManager={UrlStateManager} debug>
+      <Wizard
+        onComplete={onComplete}
+        // stateManager={UrlStateManager}
+        debug>
         <div>
           <StepOne />
           <StepTwo stepEnabled={stepEnabled} />
