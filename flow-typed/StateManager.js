@@ -1,8 +1,8 @@
 // @flow
 
-export type Losen$StateManager = {|
+declare type Losen$StateManager = {|
   updateStep: (currentStepName: string, nextStepName: string) => void,
-  getActiveStep: () => int,
+  getActiveStep: () => number,
   getItem: (key: string) => string,
   setItem: (key: string, value: string) => void,
 |};

@@ -28,7 +28,7 @@ export const UrlStateManager: Losen$StateManager = {
     );
   },
   getActiveStep: () => {
-    return getSearchParam('step');
+    return parseInt(getSearchParam('step'), 10);
   },
   getItem: (key: string) => {
     return getSearchParam(key);
