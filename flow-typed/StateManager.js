@@ -2,7 +2,7 @@
 
 declare type Losen$StateManager = {|
   updateStep: (currentStepName: string, nextStepName: string) => void,
-  getActiveStep: () => number,
+  getActiveStep: () => string,
   getItem: (key: string) => string,
   setItem: (key: string, value: string) => void,
 |};
