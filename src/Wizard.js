@@ -28,11 +28,15 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 
   function updateStep(step) {
     const stepIndex = steps.findIndex(el => el.name === step.name);
-    setSteps(previousSteps => [
-      ...previousSteps.slice(0, stepIndex),
-      step,
-      ...previousSteps.slice(stepIndex + 1),
-    ]);
+    if (stepIndex == -1) {
+      registerStep(step);
+    } else {
+      setSteps(previousSteps => [
+        ...previousSteps.slice(0, stepIndex),
+        step,
+        ...previousSteps.slice(stepIndex + 1),
+      ]);
+    }
   }
 
   async function onNext() {
