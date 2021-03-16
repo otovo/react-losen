@@ -76,7 +76,7 @@ This command uses [`@pika/pack`](https://www.pikapkg.com/blog/introducing-pika-p
 
 ### Publishing
 
-Publish new versions with `yarn run publish`. `Pack` guides you through the Through a wizard, this helps you bump the version number and publish to npm. **Note:** It's importaint to use the `run` argument, as `yarn publish` is a built in command and won't use `Pack`
+Publish new versions with `yarn run publish`. `Pack` guides you through the wizard, helps you bump the version number and publish to npm. **Note:** It's importaint to use the `run` argument, as `yarn publish` is a built in command and won't use `Pack`
 
 ### Building docs
 
