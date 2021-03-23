@@ -5,16 +5,21 @@ import { findNextValid, findPreviousValid } from './utils';
 import { ControlsContext } from './Controls';
 import { StepContext } from './Step';
 
-export class ValidationError extends Error {}
-
 type Props = {|
   onComplete: (currentStep: string) => void,
   children: React$Node,
   debug?: boolean,
   stateManager?: Losen$StateManager,
+  onValidationFailed: () => void,
 |};
 
-const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
+const Wizard = ({
+  children,
+  onComplete,
+  stateManager,
+  debug,
+  onValidationFailed,
+}: Props) => {
   const [index, setIndex] = useState<number | null>(null);
   const [steps, setSteps] = useState<Array<Losen$Step>>([]);
   const [isLoading, setLoadingState] = useState(false);
@@ -52,19 +57,14 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
         : () => setIndex(next);
 
     if (validator) {
-      try {
-        setLoadingState(true);
-        await validator();
+      setLoadingState(true);
+      const res = await validator();
+      if (res) {
         nextAction();
-      } catch (error) {
-        if (error instanceof ValidationError) {
-          console.error('ReactLosen', error); // eslint-disable-line
-        } else {
-          throw error;
-        }
-      } finally {
-        setLoadingState(false);
+      } else {
+        onValidationFailed();
       }
+      setLoadingState(false);
     } else {
       nextAction();
     }
@@ -146,5 +146,6 @@ const Wizard = ({ children, onComplete, stateManager, debug }: Props) => {
 Wizard.defaultProps = {
   debug: false,
   stateManager: undefined,
+  onValidationFailed: () => {},
 };
 export default Wizard;
