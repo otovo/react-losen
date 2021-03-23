@@ -10,6 +10,7 @@ type Props = {|
   children: React$Node,
   debug?: boolean,
   stateManager?: Losen$StateManager,
+  onStepChanged: () => void,
   onValidationFailed: () => void,
 |};
 
@@ -18,6 +19,7 @@ const Wizard = ({
   onComplete,
   stateManager,
   debug,
+  onStepChanged,
   onValidationFailed,
 }: Props) => {
   const [index, setIndex] = useState<number | null>(null);
@@ -54,7 +56,10 @@ const Wizard = ({
     const nextAction =
       next === index
         ? () => onComplete(steps[index].name)
-        : () => setIndex(next);
+        : () => {
+            setIndex(next);
+            onStepChanged();
+          };
 
     if (validator) {
       setLoadingState(true);
@@ -84,6 +89,7 @@ const Wizard = ({
     }
     const prev = findPreviousValid(steps, index);
     setIndex(prev);
+    onStepChanged();
 
     if (stateManager) {
       const currentStep = steps[index];
@@ -146,6 +152,7 @@ const Wizard = ({
 Wizard.defaultProps = {
   debug: false,
   stateManager: undefined,
+  onStepChanged: () => {},
   onValidationFailed: () => {},
 };
 export default Wizard;
