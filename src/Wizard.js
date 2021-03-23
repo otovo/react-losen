@@ -35,7 +35,7 @@ const Wizard = ({
 
   function updateStep(step) {
     const stepIndex = steps.findIndex(el => el.name === step.name);
-    if (stepIndex == -1) {
+    if (stepIndex === -1) {
       registerStep(step);
     } else {
       setSteps(previousSteps => [
