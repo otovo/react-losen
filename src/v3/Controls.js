@@ -3,21 +3,23 @@ import React from 'react';
 import { useWizardContext } from './Wizard';
 
 const Controls = ({}) => {
-  const { currentIndex, setStepIndex, stepsInTotal } = useWizardContext();
+  const { currentIndex, handleStepChange, allSteps } = useWizardContext();
 
   return (
     <>
       <button
-        disabled={currentIndex === 1}
+        type="button"
+        disabled={currentIndex === 0}
         onClick={() => {
-          setStepIndex(currentIndex - 1);
+          handleStepChange(currentIndex - 1);
         }}>
         Previous
       </button>
       <button
-        disabled={currentIndex === stepsInTotal}
+        type="button"
+        disabled={currentIndex === allSteps.length - 1}
         onClick={() => {
-          setStepIndex(currentIndex + 1);
+          handleStepChange(currentIndex + 1);
         }}>
         Next
       </button>

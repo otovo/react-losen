@@ -9,6 +9,7 @@ import { Wizard, Step, Controls } from '../src/v3';
 // import Controls from './components/Controls';
 import Emoji from './components/Emoji';
 import Button from './components/Button';
+import StepWithInput from './components/StepWithInput';
 
 # Basic example
 
@@ -25,9 +26,7 @@ The following is a pretty basic example of how it works. We have a `<Wizard />` 
       <Step name="first">
         <Emoji className="f-headline lh-copy" emoji="☝️" />
       </Step>
-      <Step name="second">
-        <Emoji className="f-headline lh-copy" emoji="✌️" />
-      </Step>
+      <StepWithInput />
       <Step name="third">
         <Emoji className="f-headline lh-copy" emoji="🤟" />
       </Step>
