@@ -7,7 +7,7 @@ route: /
 
 # react-losen &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/otovo/react-losen/blob/master/LICENSE)
 
-> A brutallty simple wizard for React and React Native.
+> A brutally simple wizard for React and React Native.
 
 **Note:** This module is currently in beta. First official release is right around the corner, and will include some nice changes:
 
